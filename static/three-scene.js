@@ -20,9 +20,9 @@
   }
 
   /* ── Hero Particle Sphere ──────────────────────────────────────── */
-  // function initHeroSphere(canvasId) {
-  //   const canvas = document.getElementById(canvasId);
-  //   if (!canvas) return;
+  function initHeroSphere(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
 
     if (!isWebGLAvailable() || !window.THREE) {
       canvas.style.display = "none";
