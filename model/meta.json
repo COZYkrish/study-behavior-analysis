@@ -1,0 +1,48 @@
+{
+  "feature_cols": [
+    "weekly_self_study_hours",
+    "attendance_percentage",
+    "class_participation"
+  ],
+  "target_reg": "total_score",
+  "target_clf": "productivity_label",
+  "cluster_names": {
+    "0": "Last-Minute Crammer",
+    "1": "Consistent Learner",
+    "2": "Night Owl"
+  },
+  "label_classes": [
+    "High",
+    "Low",
+    "Medium"
+  ],
+  "metrics": {
+    "regression": {
+      "rmse": 8.8309,
+      "r2": 0.668
+    },
+    "classifier": {
+      "accuracy": 0.841
+    }
+  },
+  "cluster_centers": [
+    {
+      "weekly_self_study_hours": 9.283045843945343,
+      "attendance_percentage": 90.14612757582776,
+      "class_participation": 5.832490159759203,
+      "cluster_id": 0
+    },
+    {
+      "weekly_self_study_hours": 21.587063630355104,
+      "attendance_percentage": 88.87106891786337,
+      "class_participation": 6.0184762362554824,
+      "cluster_id": 1
+    },
+    {
+      "weekly_self_study_hours": 14.473484236054972,
+      "attendance_percentage": 74.23630993097443,
+      "class_participation": 6.085772029102667,
+      "cluster_id": 2
+    }
+  ]
+}
