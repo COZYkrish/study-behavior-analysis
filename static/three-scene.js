@@ -24,12 +24,12 @@
   //   const canvas = document.getElementById(canvasId);
   //   if (!canvas) return;
 
-  //   if (!isWebGLAvailable() || !window.THREE) {
-  //     canvas.style.display = "none";
-  //     const fallback = canvas.parentElement?.querySelector(".orbit-fallback");
-  //     if (fallback) fallback.style.display = "flex";
-  //     return;
-  //   }
+    if (!isWebGLAvailable() || !window.THREE) {
+      canvas.style.display = "none";
+      const fallback = canvas.parentElement?.querySelector(".orbit-fallback");
+      if (fallback) fallback.style.display = "flex";
+      return;
+    }
 
     const THREE = window.THREE;
     const W = canvas.clientWidth || 600;
