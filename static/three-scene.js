@@ -31,9 +31,9 @@
   //     return;
   //   }
 
-  //   const THREE = window.THREE;
-  //   const W = canvas.clientWidth || 600;
-  //   const H = canvas.clientHeight || 600;
+    const THREE = window.THREE;
+    const W = canvas.clientWidth || 600;
+    const H = canvas.clientHeight || 600;
 
     const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
