@@ -39,9 +39,9 @@
   //   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   //   renderer.setSize(W, H);
 
-  //   const scene = new THREE.Scene();
-  //   const camera = new THREE.PerspectiveCamera(55, W / H, 0.1, 1000);
-  //   camera.position.z = 1.9;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(55, W / H, 0.1, 1000);
+    camera.position.z = 1.9;
 
     /* Particles on sphere surface */
     const COUNT = 1800;
