@@ -35,9 +35,9 @@
   //   const W = canvas.clientWidth || 600;
   //   const H = canvas.clientHeight || 600;
 
-  //   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  //   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  //   renderer.setSize(W, H);
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(W, H);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(55, W / H, 0.1, 1000);
