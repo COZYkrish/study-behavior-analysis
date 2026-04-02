@@ -80,13 +80,13 @@ study-behavior-analyzer/
 
 ## 🧠 ML Pipeline
 
-1. Load CSV → sample 50K rows for training speed  
+<!-- 1. Load CSV → sample 50K rows for training speed  
 2. Fill missing values with column medians  
 3. Create `productivity_label` from `total_score`  
 4. Scale features with `StandardScaler`  
 5. Train/test split (80/20)  
 6. Train + evaluate all 3 models  
-7. Save `.pkl` files + `meta.json`
+7. Save `.pkl` files + `meta.json` -->
 
 ---
 
