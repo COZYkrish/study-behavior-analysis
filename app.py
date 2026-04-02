@@ -268,10 +268,10 @@ def _cluster_profiles():
     ]
 
 
-# def _cluster_profile(cluster_name):
-#     cluster_id = next((cid for cid, name in CLUSTER_NAMES.items() if name == cluster_name), None)
-#     center = CLUSTER_CENTERS.get(cluster_id, {})
-#     return {
+def _cluster_profile(cluster_name):
+    cluster_id = next((cid for cid, name in CLUSTER_NAMES.items() if name == cluster_name), None)
+    center = CLUSTER_CENTERS.get(cluster_id, {})
+    return {
         "name": cluster_name,
         "study_hours": round(float(center.get("weekly_self_study_hours", 0)), 1),
         "attendance": round(float(center.get("attendance_percentage", 0)), 1),
