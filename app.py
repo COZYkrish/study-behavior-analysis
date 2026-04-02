@@ -277,11 +277,11 @@ def _cluster_profiles():
 #         "attendance": round(float(center.get("attendance_percentage", 0)), 1),
 #         "participation": round(float(center.get("class_participation", 0)), 1),
 #         "description": {
-#             "Consistent Learner": "Stable weekly effort with strong classroom follow-through.",
-#             "Night Owl": "Long study bursts with softer attendance discipline.",
-#             "Last-Minute Crammer": "Compressed effort pattern that relies on late acceleration.",
-#         }.get(cluster_name, "Balanced academic behavior profile."),
-#     }
+            "Consistent Learner": "Stable weekly effort with strong classroom follow-through.",
+            "Night Owl": "Long study bursts with softer attendance discipline.",
+            "Last-Minute Crammer": "Compressed effort pattern that relies on late acceleration.",
+        }.get(cluster_name, "Balanced academic behavior profile."),
+    }
 
 
 def _benchmark_summary(study_hours, attendance, participation, score):
