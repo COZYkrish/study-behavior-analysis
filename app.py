@@ -23,6 +23,11 @@ CLUSTER_NAMES = {int(k): v for k, v in META["cluster_names"].items()}
 CLUSTER_CENTERS = {
     int(row["cluster_id"]): row for row in META.get("cluster_centers", [])
 }
+CLUSTER_CENTERS_SCALED = {
+    int(row["cluster_id"]): np.array(row["values"], dtype=float)
+    for row in META.get("cluster_centers_scaled", [])
+}
+CLUSTER_DIST = META.get("cluster_distribution", {})
 FEATURE_COLS = META["feature_cols"]
 FIELD_SPECS = {
     "weekly_self_study_hours": (0, 40),
@@ -47,7 +52,6 @@ def _get_models():
         _MODELS = {
             "reg": joblib.load(os.path.join(MODEL_DIR, "regression.pkl")),
             "clf": joblib.load(os.path.join(MODEL_DIR, "classifier.pkl")),
-            "km": joblib.load(os.path.join(MODEL_DIR, "clustering.pkl")),
             "scaler": joblib.load(os.path.join(MODEL_DIR, "scaler.pkl")),
             "le": joblib.load(os.path.join(MODEL_DIR, "label_encoder.pkl")),
         }
@@ -184,7 +188,6 @@ def _predict_from_features(features):
     models = _get_models()
     reg = models["reg"]
     clf = models["clf"]
-    km = models["km"]
     scaler = models["scaler"]
     le = models["le"]
 
@@ -204,7 +207,7 @@ def _predict_from_features(features):
             for label, prob in zip(le.classes_, prob_values)
         }
 
-    cluster_id = int(km.predict(scaled)[0])
+    cluster_id = _predict_cluster_id(scaled[0])
     study_type = CLUSTER_NAMES.get(cluster_id, "Consistent Learner")
 
     return score, productivity, study_type, productivity_probs
@@ -220,13 +223,15 @@ def _build_overview_stats():
 
 
 def _cluster_distribution():
-    km = _get_models()["km"]
-    cluster_labels = km.labels_
-    total = len(cluster_labels)
-    dist = {}
-    for cid, cname in CLUSTER_NAMES.items():
-        dist[cname] = round(100 * int((cluster_labels == cid).sum()) / total, 1)
-    return dist
+    return CLUSTER_DIST
+
+
+def _predict_cluster_id(scaled_features):
+    distances = []
+    for cluster_id, center in CLUSTER_CENTERS_SCALED.items():
+        distance = float(np.linalg.norm(scaled_features - center))
+        distances.append((distance, cluster_id))
+    return min(distances, key=lambda item: item[0])[1]
 
 
 def _cluster_profiles():

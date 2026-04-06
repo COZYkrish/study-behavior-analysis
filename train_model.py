@@ -96,11 +96,11 @@ print(f"Classifier accuracy -> {acc:.4f}")
 print("\nTraining clustering model (KMeans, k=3)...")
 km = KMeans(n_clusters=3, random_state=42, n_init=10)
 km.fit(X_scaled)
-joblib.dump(km, os.path.join(MODEL_DIR, "clustering.pkl"))
 
 centers = scaler.inverse_transform(km.cluster_centers_)
 centers_df = pd.DataFrame(centers, columns=FEATURE_COLS)
 centers_df["cluster_id"] = range(3)
+cluster_counts = pd.Series(km.labels_).value_counts(normalize=True).sort_index()
 
 
 def name_cluster(row):
@@ -136,6 +136,14 @@ meta = {
         "classifier": {"accuracy": round(acc, 4)},
     },
     "cluster_centers": centers_df.to_dict(orient="records"),
+    "cluster_centers_scaled": [
+        {"cluster_id": int(i), "values": [float(v) for v in center]}
+        for i, center in enumerate(km.cluster_centers_)
+    ],
+    "cluster_distribution": {
+        cluster_names[int(cluster_id)]: round(float(ratio) * 100, 1)
+        for cluster_id, ratio in cluster_counts.items()
+    },
 }
 
 with open(os.path.join(MODEL_DIR, "meta.json"), "w", encoding="utf-8") as f:

@@ -44,5 +44,36 @@
       "class_participation": 6.085772029102667,
       "cluster_id": 2
     }
-  ]
+  ],
+  "cluster_centers_scaled": [
+    {
+      "cluster_id": 0,
+      "values": [
+        -0.8313535052471824,
+        0.5868216518378292,
+        -0.07339135770228057
+      ]
+    },
+    {
+      "cluster_id": 1,
+      "values": [
+        0.9508727935425187,
+        0.4520766326134635,
+        0.021734072999266
+      ]
+    },
+    {
+      "cluster_id": 2,
+      "values": [
+        -0.07952300847375826,
+        -1.0944882008668688,
+        0.05615353815271569
+      ]
+    }
+  ],
+  "cluster_distribution": {
+    "Last-Minute Crammer": 34.5,
+    "Consistent Learner": 33.3,
+    "Night Owl": 32.2
+  }
 }
