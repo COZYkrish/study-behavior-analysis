@@ -18,8 +18,8 @@
   ],
   "metrics": {
     "regression": {
-      "rmse": 8.8309,
-      "r2": 0.668
+      "rmse": 8.1663,
+      "r2": 0.7161
     },
     "classifier": {
       "accuracy": 0.841
@@ -27,8 +27,8 @@
   },
   "cluster_centers": [
     {
-      "weekly_self_study_hours": 9.283045843945343,
-      "attendance_percentage": 90.14612757582776,
+      "weekly_self_study_hours": 9.283045843945356,
+      "attendance_percentage": 90.14612757582773,
       "class_participation": 5.832490159759203,
       "cluster_id": 0
     },
@@ -40,7 +40,7 @@
     },
     {
       "weekly_self_study_hours": 14.473484236054972,
-      "attendance_percentage": 74.23630993097443,
+      "attendance_percentage": 74.23630993097444,
       "class_participation": 6.085772029102667,
       "cluster_id": 2
     }
