@@ -14,11 +14,7 @@ app = Flask(__name__)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_DIR = os.path.join(BASE_DIR, "model")
 
-reg = joblib.load(os.path.join(MODEL_DIR, "regression.pkl"))
-clf = joblib.load(os.path.join(MODEL_DIR, "classifier.pkl"))
-km = joblib.load(os.path.join(MODEL_DIR, "clustering.pkl"))
-scaler = joblib.load(os.path.join(MODEL_DIR, "scaler.pkl"))
-le = joblib.load(os.path.join(MODEL_DIR, "label_encoder.pkl"))
+_MODELS = None
 
 with open(os.path.join(MODEL_DIR, "meta.json"), encoding="utf-8") as f:
     META = json.load(f)
@@ -43,6 +39,19 @@ class ValidationError(Exception):
     def __init__(self, fields):
         super().__init__("Invalid input values")
         self.fields = fields
+
+
+def _get_models():
+    global _MODELS
+    if _MODELS is None:
+        _MODELS = {
+            "reg": joblib.load(os.path.join(MODEL_DIR, "regression.pkl")),
+            "clf": joblib.load(os.path.join(MODEL_DIR, "classifier.pkl")),
+            "km": joblib.load(os.path.join(MODEL_DIR, "clustering.pkl")),
+            "scaler": joblib.load(os.path.join(MODEL_DIR, "scaler.pkl")),
+            "le": joblib.load(os.path.join(MODEL_DIR, "label_encoder.pkl")),
+        }
+    return _MODELS
 
 
 @app.route("/")
@@ -172,6 +181,13 @@ def _parse_features(data):
 
 
 def _predict_from_features(features):
+    models = _get_models()
+    reg = models["reg"]
+    clf = models["clf"]
+    km = models["km"]
+    scaler = models["scaler"]
+    le = models["le"]
+
     scaled = scaler.transform(features)
 
     score_raw = float(reg.predict(scaled)[0])
@@ -204,6 +220,7 @@ def _build_overview_stats():
 
 
 def _cluster_distribution():
+    km = _get_models()["km"]
     cluster_labels = km.labels_
     total = len(cluster_labels)
     dist = {}
