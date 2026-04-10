@@ -355,11 +355,11 @@ def _insight_cards(study_hours, attendance, participation, score, productivity_p
     #         "description": "Estimated gap to reach the premium-performance band.",
     #     },
     #     {
-    #         "title": "Classifier Confidence",
-    #         "value": f"{round(productivity_conf, 1)}%",
-    #         "description": "How decisively the productivity classifier separates your current pattern.",
-    #     },
-    # ]
+            "title": "Classifier Confidence",
+            "value": f"{round(productivity_conf, 1)}%",
+            "description": "How decisively the productivity classifier separates your current pattern.",
+        },
+    ]
 
 
 def _study_profile_summary(study_hours, attendance, participation):
