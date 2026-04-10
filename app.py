@@ -342,24 +342,24 @@ def _insight_cards(study_hours, attendance, participation, score, productivity_p
         key=lambda item: item[1],
     )[0]
 
-    productivity_conf = max(productivity_probs.values()) if productivity_probs else 65.0
-    return [
-        {
-            "title": "Strongest Signal",
-            "value": strongest_dimension,
-            "description": "This is the behavior currently contributing the most structure to your profile.",
-        },
-        {
-            "title": "Score Lift Needed",
-            "value": f"{round(max(0, 85 - score), 1)} pts",
-            "description": "Estimated gap to reach the premium-performance band.",
-        },
-        {
-            "title": "Classifier Confidence",
-            "value": f"{round(productivity_conf, 1)}%",
-            "description": "How decisively the productivity classifier separates your current pattern.",
-        },
-    ]
+    # productivity_conf = max(productivity_probs.values()) if productivity_probs else 65.0
+    # return [
+    #     {
+    #         "title": "Strongest Signal",
+    #         "value": strongest_dimension,
+    #         "description": "This is the behavior currently contributing the most structure to your profile.",
+    #     },
+    #     {
+    #         "title": "Score Lift Needed",
+    #         "value": f"{round(max(0, 85 - score), 1)} pts",
+    #         "description": "Estimated gap to reach the premium-performance band.",
+    #     },
+    #     {
+    #         "title": "Classifier Confidence",
+    #         "value": f"{round(productivity_conf, 1)}%",
+    #         "description": "How decisively the productivity classifier separates your current pattern.",
+    #     },
+    # ]
 
 
 def _study_profile_summary(study_hours, attendance, participation):
