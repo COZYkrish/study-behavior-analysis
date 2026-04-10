@@ -350,11 +350,11 @@ def _insight_cards(study_hours, attendance, participation, score, productivity_p
     #         "description": "This is the behavior currently contributing the most structure to your profile.",
     #     },
     #     {
-    #         "title": "Score Lift Needed",
-    #         "value": f"{round(max(0, 85 - score), 1)} pts",
-    #         "description": "Estimated gap to reach the premium-performance band.",
-    #     },
-    #     {
+            "title": "Score Lift Needed",
+            "value": f"{round(max(0, 85 - score), 1)} pts",
+            "description": "Estimated gap to reach the premium-performance band.",
+        },
+        {
             "title": "Classifier Confidence",
             "value": f"{round(productivity_conf, 1)}%",
             "description": "How decisively the productivity classifier separates your current pattern.",
