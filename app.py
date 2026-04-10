@@ -342,9 +342,9 @@ def _insight_cards(study_hours, attendance, participation, score, productivity_p
         key=lambda item: item[1],
     )[0]
 
-    # productivity_conf = max(productivity_probs.values()) if productivity_probs else 65.0
-    # return [
-    #     {
+    productivity_conf = max(productivity_probs.values()) if productivity_probs else 65.0
+    return [
+        {
             "title": "Strongest Signal",
             "value": strongest_dimension,
             "description": "This is the behavior currently contributing the most structure to your profile.",
