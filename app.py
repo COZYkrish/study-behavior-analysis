@@ -135,14 +135,14 @@ def trend():
             "summary": _trend_summary(points, attendance, participation),
             "optimal_point": optimal_point,
         })
-    except ValidationError as exc:
-        return jsonify({
-            "error": {
-                "code": "validation_error",
-                "message": "Invalid input values.",
-                "fields": exc.fields,
-            }
-        }), 400
+    # except ValidationError as exc:
+    #     return jsonify({
+    #         "error": {
+    #             "code": "validation_error",
+    #             "message": "Invalid input values.",
+    #             "fields": exc.fields,
+    #         }
+    #     }), 400
     except Exception as exc:
         return jsonify({
             "error": {
