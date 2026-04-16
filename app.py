@@ -139,9 +139,9 @@ def trend():
     #     return jsonify({
     #         "error": {
     #             "code": "validation_error",
-    #             "message": "Invalid input values.",
-    #             "fields": exc.fields,
-    #         }
+                "message": "Invalid input values.",
+                "fields": exc.fields,
+            }
     #     }), 400
     except Exception as exc:
         return jsonify({
