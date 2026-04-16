@@ -130,11 +130,11 @@ def trend():
 
         optimal_point = max(points, key=lambda point: point["score"])
 
-        return jsonify({
-            "points": points,
-            "summary": _trend_summary(points, attendance, participation),
-            "optimal_point": optimal_point,
-        })
+        # return jsonify({
+        #     "points": points,
+        #     "summary": _trend_summary(points, attendance, participation),
+        #     "optimal_point": optimal_point,
+        # })
     except ValidationError as exc:
         return jsonify({
             "error": {
