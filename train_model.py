@@ -98,7 +98,7 @@ km = KMeans(n_clusters=3, random_state=42, n_init=10)
 km.fit(X_scaled)
 
 centers = scaler.inverse_transform(km.cluster_centers_)
-# centers_df = pd.DataFrame(centers, columns=FEATURE_COLS)
+centers_df = pd.DataFrame(centers, columns=FEATURE_COLS)
 # centers_df["cluster_id"] = range(3)
 # cluster_counts = pd.Series(km.labels_).value_counts(normalize=True).sort_index()
 
