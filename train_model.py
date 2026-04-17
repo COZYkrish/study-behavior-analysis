@@ -94,7 +94,7 @@ joblib.dump(clf, os.path.join(MODEL_DIR, "classifier.pkl"))
 print(f"Classifier accuracy -> {acc:.4f}")
 
 print("\nTraining clustering model (KMeans, k=3)...")
-# km = KMeans(n_clusters=3, random_state=42, n_init=10)
+km = KMeans(n_clusters=3, random_state=42, n_init=10)
 # km.fit(X_scaled)
 
 # centers = scaler.inverse_transform(km.cluster_centers_)
