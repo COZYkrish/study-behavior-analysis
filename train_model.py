@@ -95,7 +95,7 @@ print(f"Classifier accuracy -> {acc:.4f}")
 
 print("\nTraining clustering model (KMeans, k=3)...")
 km = KMeans(n_clusters=3, random_state=42, n_init=10)
-# km.fit(X_scaled)
+km.fit(X_scaled)
 
 # centers = scaler.inverse_transform(km.cluster_centers_)
 # centers_df = pd.DataFrame(centers, columns=FEATURE_COLS)
