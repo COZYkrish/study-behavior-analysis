@@ -60,13 +60,7 @@ def _get_models():
 
 @app.route("/")
 def index():
-    return render_template(
-        "index.html",
-        meta=META,
-        overview=_build_overview_stats(),
-        cluster_profiles=_cluster_profiles(),
-        page_theme="home",
-    )
+    return render_template("index.html", meta=META, overview=_build_overview_stats())
 
 
 @app.route("/dashboard")
@@ -76,67 +70,6 @@ def dashboard():
         meta=META,
         overview=_build_overview_stats(),
         cluster_profiles=_cluster_profiles(),
-        optimal_zone=_optimal_zone_labels(),
-        page_theme="dashboard",
-    )
-
-
-@app.route("/about")
-def about():
-    return render_template(
-        "about.html",
-        meta=META,
-        overview=_build_overview_stats(),
-        cluster_profiles=_cluster_profiles(),
-        optimal_zone=_optimal_zone_labels(),
-        page_theme="about",
-    )
-
-
-@app.route("/how-it-works")
-def how_it_works():
-    return render_template(
-        "how_it_works.html",
-        meta=META,
-        overview=_build_overview_stats(),
-        cluster_profiles=_cluster_profiles(),
-        optimal_zone=_optimal_zone_labels(),
-        pipeline_stages=_pipeline_stages(),
-        page_theme="pipeline",
-    )
-
-
-@app.route("/study-types")
-def study_types():
-    return render_template(
-        "study_types.html",
-        meta=META,
-        overview=_build_overview_stats(),
-        cluster_profiles=_cluster_profiles(),
-        page_theme="archetypes",
-    )
-
-
-@app.route("/insights")
-def insights():
-    return render_template(
-        "insights.html",
-        meta=META,
-        overview=_build_overview_stats(),
-        optimal_zone=_optimal_zone_labels(),
-        recommendations=_insight_page_recommendations(),
-        page_theme="insights",
-    )
-
-
-@app.route("/history")
-def history():
-    return render_template(
-        "history.html",
-        meta=META,
-        overview=_build_overview_stats(),
-        cluster_profiles=_cluster_profiles(),
-        page_theme="history",
     )
 
 
@@ -291,81 +224,6 @@ def _build_overview_stats():
 
 def _cluster_distribution():
     return CLUSTER_DIST
-
-
-def _optimal_zone_labels():
-    return {
-        "study_hours": {
-            "label": "Weekly self-study hours",
-            "range": OPTIMAL_ZONE["study_hours"],
-            "display": f"{OPTIMAL_ZONE['study_hours'][0]}-{OPTIMAL_ZONE['study_hours'][1]} h",
-        },
-        "attendance": {
-            "label": "Attendance",
-            "range": OPTIMAL_ZONE["attendance"],
-            "display": f"{OPTIMAL_ZONE['attendance'][0]}-{OPTIMAL_ZONE['attendance'][1]}%",
-        },
-        "participation": {
-            "label": "Class participation",
-            "range": OPTIMAL_ZONE["participation"],
-            "display": f"{OPTIMAL_ZONE['participation'][0]}-{OPTIMAL_ZONE['participation'][1]} / 10",
-        },
-    }
-
-
-def _pipeline_stages():
-    return [
-        {
-            "id": "ingestion",
-            "index": "01",
-            "title": "Data ingestion",
-            "detail": "Three behavioral inputs are validated and normalized into a clean signal vector.",
-        },
-        {
-            "id": "interpretation",
-            "index": "02",
-            "title": "Model interpretation",
-            "detail": "Regression, classification, and clustering read the same behavior from different angles.",
-        },
-        {
-            "id": "prediction",
-            "index": "03",
-            "title": "Prediction engine",
-            "detail": "The backend combines outputs into score outlook, productivity band, and confidence framing.",
-        },
-        {
-            "id": "archetypes",
-            "index": "04",
-            "title": "Behavior archetypes",
-            "detail": "Nearest-cluster matching turns raw inputs into recognizable study operating modes.",
-        },
-        {
-            "id": "guidance",
-            "index": "05",
-            "title": "Optimization guidance",
-            "detail": "Benchmark alignment and smart suggestions expose the fastest correction path.",
-        },
-    ]
-
-
-def _insight_page_recommendations():
-    return [
-        {
-            "title": "High-efficiency study band",
-            "value": f"{OPTIMAL_ZONE['study_hours'][0]}-{OPTIMAL_ZONE['study_hours'][1]} h",
-            "description": "The model sees the most consistent score lift when focused weekly study time sits in this corridor.",
-        },
-        {
-            "title": "Attendance stability zone",
-            "value": f"{OPTIMAL_ZONE['attendance'][0]}-{OPTIMAL_ZONE['attendance'][1]}%",
-            "description": "Attendance becomes a structural multiplier once discipline moves into the premium consistency range.",
-        },
-        {
-            "title": "Participation signal range",
-            "value": f"{OPTIMAL_ZONE['participation'][0]}-{OPTIMAL_ZONE['participation'][1]} / 10",
-            "description": "Visible classroom engagement strengthens retention patterns and improves outlook reliability.",
-        },
-    ]
 
 
 def _predict_cluster_id(scaled_features):
