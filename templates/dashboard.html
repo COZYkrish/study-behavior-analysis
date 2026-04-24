@@ -1,241 +1,240 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard - Study Behavior Analyzer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-</head>
-<body class="dashboard-page">
-  <div class="site-shell">
-    <div class="ambient ambient-a" data-parallax data-depth="0.1"></div>
-    <div class="ambient ambient-b" data-parallax data-depth="-0.08"></div>
-    <div class="grid-floor"></div>
+{% extends "base.html" %}
+{% block title %}Mission Control — Study Behavior Analyzer{% endblock %}
+{% block body_class %}dashboard-page{% endblock %}
 
-    <header class="topbar glass-panel">
-      <a href="/" class="brand-mark">
-        <span class="brand-kicker">SB</span>
-        <span class="brand-copy">
-          <strong>Study Behavior Analyzer</strong>
-          <small>Mission control dashboard</small>
+{% block head %}
+<meta name="description" content="AI-powered study behavior analyzer dashboard. Enter your study metrics and get a full performance prediction with archetype, score trend, and optimization guidance." />
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-grid">
+  <!-- ═══ LEFT: Control Panel ═══ -->
+  <aside class="control-stack glass-panel reveal">
+    <div class="panel-head">
+      <span class="eyebrow">Input Matrix</span>
+      <h1>Shape the study signal.</h1>
+      <p>Dial the behavior profile and run an updated performance scan.</p>
+    </div>
+
+    <!-- Model status pills -->
+    <div class="status-cluster" style="margin: 18px 0 0;">
+      <span class="metric-pill">R² {{ "%.2f"|format(meta.metrics.regression.r2) }}</span>
+      <span class="metric-pill">Acc {{ "%.0f"|format(meta.metrics.classifier.accuracy * 100) }}%</span>
+      <span class="metric-pill">{{ overview.models }} Models</span>
+    </div>
+
+    <form id="predict-form" class="control-form" aria-label="Predict performance">
+      <label class="range-block">
+        <span class="range-copy">
+          <strong>Weekly Self-Study Hours</strong>
+          <small>Controls focused output volume</small>
         </span>
-      </a>
-      <div class="status-cluster">
-        <span class="metric-pill">R2 {{ "%.2f"|format(meta.metrics.regression.r2) }}</span>
-        <span class="metric-pill">Acc {{ "%.0f"|format(meta.metrics.classifier.accuracy * 100) }}%</span>
-        <span class="metric-pill">Models {{ overview.models }}</span>
+        <span class="range-badge" id="study_hours_val">15.0 h</span>
+        <input type="range" id="study_hours" name="weekly_self_study_hours"
+               min="0" max="40" step="0.5" value="15"
+               aria-label="Weekly self-study hours" />
+      </label>
+
+      <label class="range-block">
+        <span class="range-copy">
+          <strong>Attendance Percentage</strong>
+          <small>Measures schedule discipline</small>
+        </span>
+        <span class="range-badge" id="attendance_val">80.0 %</span>
+        <input type="range" id="attendance" name="attendance_percentage"
+               min="0" max="100" step="0.5" value="80"
+               aria-label="Attendance percentage" />
+      </label>
+
+      <label class="range-block">
+        <span class="range-copy">
+          <strong>Class Participation</strong>
+          <small>Captures visible engagement</small>
+        </span>
+        <span class="range-badge" id="participation_val">5.0 / 10</span>
+        <input type="range" id="participation" name="class_participation"
+               min="0" max="10" step="0.1" value="5"
+               aria-label="Class participation" />
+      </label>
+
+      <button type="submit" class="btn btn-primary btn-wide" id="analyze-btn">
+        <span id="btn-text">Run Performance Scan</span>
+        <span id="btn-spinner" class="spinner hidden"></span>
+      </button>
+    </form>
+
+    <!-- Model diagnostics -->
+    <section class="support-card glass-inner">
+      <span class="support-kicker">Model diagnostics</span>
+      <div class="support-metric">
+        <span>Regression RMSE</span>
+        <strong>{{ "%.2f"|format(meta.metrics.regression.rmse) }}</strong>
       </div>
-      <a href="/" class="btn btn-secondary">Back to Story</a>
-    </header>
+      <div class="support-metric">
+        <span>Regression R²</span>
+        <strong>{{ "%.4f"|format(meta.metrics.regression.r2) }}</strong>
+      </div>
+      <div class="support-metric">
+        <span>Classifier accuracy</span>
+        <strong>{{ "%.1f"|format(meta.metrics.classifier.accuracy * 100) }}%</strong>
+      </div>
+    </section>
 
-    <main class="dashboard-grid">
-      <aside class="control-stack glass-panel reveal">
-        <div class="panel-head">
-          <span class="eyebrow">Input Matrix</span>
-          <h1>Shape the study signal.</h1>
-          <p>Dial the behavior profile and run an updated performance scan.</p>
-        </div>
+    <!-- Archetype atlas -->
+    <section class="support-card glass-inner">
+      <span class="support-kicker">Archetype atlas</span>
+      <div class="cluster-list">
+        {% for cluster in cluster_profiles %}
+        <article class="cluster-item">
+          <strong>{{ cluster.name }}</strong>
+          <span>{{ cluster.description }}</span>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+  </aside>
 
-        <form id="predict-form" class="control-form">
-          <label class="range-block">
-            <span class="range-copy">
-              <strong>Weekly Self-Study Hours</strong>
-              <small>Controls focused output volume</small>
-            </span>
-            <span class="range-badge" id="study_hours_val">15.0 h</span>
-            <input type="range" id="study_hours" name="weekly_self_study_hours" min="0" max="40" step="0.5" value="15" />
-          </label>
+  <!-- ═══ RIGHT: Results ═══ -->
+  <section class="results-stage" aria-live="polite">
+    <div id="error-banner" class="error-banner hidden" role="alert"></div>
 
-          <label class="range-block">
-            <span class="range-copy">
-              <strong>Attendance Percentage</strong>
-              <small>Measures schedule discipline</small>
-            </span>
-            <span class="range-badge" id="attendance_val">80.0 %</span>
-            <input type="range" id="attendance" name="attendance_percentage" min="0" max="100" step="0.5" value="80" />
-          </label>
+    <!-- Empty state -->
+    <section id="placeholder" class="empty-state glass-panel reveal" aria-label="Awaiting input">
+      <span class="empty-icon">⬡</span>
+      <span class="eyebrow">Awaiting Input</span>
+      <h2>The console is ready.</h2>
+      <p>Run the analyzer to generate score outlook, behavior fingerprint, trend projections, and optimization recommendations.</p>
+    </section>
 
-          <label class="range-block">
-            <span class="range-copy">
-              <strong>Class Participation</strong>
-              <small>Captures visible engagement</small>
-            </span>
-            <span class="range-badge" id="participation_val">5.0 / 10</span>
-            <input type="range" id="participation" name="class_participation" min="0" max="10" step="0.1" value="5" />
-          </label>
+    <!-- Results shell (hidden until prediction runs) -->
+    <div id="results-section" class="results-shell hidden">
 
-          <button type="submit" class="btn btn-primary btn-wide" id="analyze-btn">
-            <span id="btn-text">Run Performance Scan</span>
-            <span id="btn-spinner" class="spinner hidden"></span>
-          </button>
-        </form>
-
-        <section class="support-card glass-inner">
-          <span class="support-kicker">Model diagnostics</span>
-          <div class="support-metric">
-            <span>Regression RMSE</span>
-            <strong>{{ "%.2f"|format(meta.metrics.regression.rmse) }}</strong>
+      <!-- Top row: Score + mini panels -->
+      <section class="hero-results">
+        <article class="score-panel glass-panel reveal" data-tilt>
+          <span class="panel-tag">Predicted score</span>
+          <div class="score-stack">
+            <strong id="result-score">--</strong>
+            <span>/100</span>
           </div>
-          <div class="support-metric">
-            <span>Regression R2</span>
-            <strong>{{ "%.4f"|format(meta.metrics.regression.r2) }}</strong>
-          </div>
-          <div class="support-metric">
-            <span>Classifier accuracy</span>
-            <strong>{{ "%.1f"|format(meta.metrics.classifier.accuracy * 100) }}%</strong>
-          </div>
-        </section>
+          <p id="result-narrative" class="muted-copy">--</p>
+        </article>
 
-        <section class="support-card glass-inner">
-          <span class="support-kicker">Archetype atlas</span>
-          <div class="cluster-list">
-            {% for cluster in cluster_profiles %}
-            <article class="cluster-item">
-              <strong>{{ cluster.name }}</strong>
-              <span>{{ cluster.description }}</span>
-            </article>
-            {% endfor %}
-          </div>
-        </section>
-      </aside>
-
-      <section class="results-stage">
-        <div id="error-banner" class="error-banner hidden"></div>
-
-        <section id="placeholder" class="empty-state glass-panel reveal">
-          <span class="eyebrow">Awaiting Input</span>
-          <h2>The console is ready.</h2>
-          <p>Run the analyzer to generate score outlook, behavior fingerprint, trend projections, and optimization recommendations.</p>
-        </section>
-
-        <div id="results-section" class="results-shell hidden">
-          <section class="hero-results">
-            <article class="score-panel glass-panel reveal" data-tilt>
-              <span class="panel-tag">Predicted score</span>
-              <div class="score-stack">
-                <strong id="result-score">--</strong>
-                <span>/100</span>
-              </div>
-              <p id="result-narrative">--</p>
-            </article>
-
-            <div class="results-triptych">
-              <article class="mini-panel glass-panel reveal" data-tilt>
-                <span class="panel-tag">Productivity mode</span>
-                <strong id="result-productivity">--</strong>
-                <p id="prod-sub">--</p>
-              </article>
-              <article class="mini-panel glass-panel reveal" data-tilt>
-                <span class="panel-tag">Study archetype</span>
-                <strong id="result-cluster">--</strong>
-                <p id="cluster-desc">--</p>
-              </article>
-              <article class="mini-panel glass-panel reveal" data-tilt>
-                <span class="panel-tag">Reliability band</span>
-                <strong id="result-confidence">--</strong>
-                <p id="confidence-summary">--</p>
-              </article>
-            </div>
-          </section>
-
-          <section class="intel-grid">
-            <article class="intel-card glass-panel reveal">
-              <div class="intel-head">
-                <span class="eyebrow">AI Insights</span>
-                <h3>Optimization recommendations</h3>
-              </div>
-              <ul id="suggestion-list" class="signal-list"></ul>
-            </article>
-
-            <article class="intel-card glass-panel reveal">
-              <div class="intel-head">
-                <span class="eyebrow">Study Profile</span>
-                <h3>Behavior fingerprint</h3>
-              </div>
-              <div id="fingerprint-grid" class="fingerprint-grid"></div>
-            </article>
-
-            <article class="intel-card glass-panel reveal">
-              <div class="intel-head">
-                <span class="eyebrow">Comparison Layer</span>
-                <h3>Optimal zone alignment</h3>
-              </div>
-              <strong id="comparison-headline" class="headline-metric">--</strong>
-              <p id="comparison-subtext" class="muted-copy">--</p>
-              <ul id="comparison-list" class="signal-list compact"></ul>
-            </article>
-          </section>
-
-          <section class="subgrid">
-            <article class="wide-panel glass-panel reveal">
-              <div class="panel-title-row">
-                <div>
-                  <span class="eyebrow">Performance Trajectory</span>
-                  <h3>Score trend by study hours</h3>
-                </div>
-                <p id="trend-summary" class="muted-copy">--</p>
-              </div>
-              <canvas id="trendChart"></canvas>
-            </article>
-
-            <article class="glass-panel reveal">
-              <div class="panel-title-row">
-                <div>
-                  <span class="eyebrow">Feature Comparison</span>
-                  <h3>Input stack</h3>
-                </div>
-              </div>
-              <canvas id="barChart"></canvas>
-            </article>
-
-            <article class="glass-panel reveal">
-              <div class="panel-title-row">
-                <div>
-                  <span class="eyebrow">Archetype Intelligence</span>
-                  <h3>Cluster distribution</h3>
-                </div>
-              </div>
-              <canvas id="pieChart"></canvas>
-            </article>
-          </section>
-
-          <section class="intel-grid lower">
-            <article class="intel-card glass-panel reveal">
-              <div class="intel-head">
-                <span class="eyebrow">Console Notes</span>
-                <h3>Profile summary</h3>
-              </div>
-              <div id="profile-summary" class="summary-pills"></div>
-            </article>
-
-            <article class="intel-card glass-panel reveal">
-              <div class="intel-head">
-                <span class="eyebrow">Signal Cards</span>
-                <h3>Decision highlights</h3>
-              </div>
-              <div id="insight-cards" class="insight-cards"></div>
-            </article>
-
-            <article class="intel-card glass-panel reveal">
-              <div class="intel-head">
-                <span class="eyebrow">History Hook</span>
-                <h3>Saved runs</h3>
-              </div>
-              <div id="history-hook" class="history-hook">
-                <p>Session-ready surface. Persistence can be wired later without redesigning the console.</p>
-                <span class="metric-pill">History-ready UI</span>
-              </div>
-            </article>
-          </section>
+        <div class="results-triptych">
+          <article class="mini-panel glass-panel reveal" data-tilt>
+            <span class="panel-tag">Productivity mode</span>
+            <strong id="result-productivity">--</strong>
+            <p id="prod-sub">--</p>
+          </article>
+          <article class="mini-panel glass-panel reveal" data-tilt>
+            <span class="panel-tag">Study archetype</span>
+            <strong id="result-cluster">--</strong>
+            <p id="cluster-desc">--</p>
+          </article>
+          <article class="mini-panel glass-panel reveal" data-tilt>
+            <span class="panel-tag">Reliability band</span>
+            <strong id="result-confidence">--</strong>
+            <p id="confidence-summary">--</p>
+          </article>
         </div>
       </section>
-    </main>
-  </div>
 
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
-</body>
-</html>
+      <!-- Intel grid -->
+      <section class="intel-grid">
+        <article class="intel-card glass-panel reveal">
+          <div class="intel-head">
+            <span class="eyebrow">AI Insights</span>
+            <h3>Optimization recommendations</h3>
+          </div>
+          <ul id="suggestion-list" class="signal-list"></ul>
+        </article>
+
+        <article class="intel-card glass-panel reveal">
+          <div class="intel-head">
+            <span class="eyebrow">Study Profile</span>
+            <h3>Behavior fingerprint</h3>
+          </div>
+          <div id="fingerprint-grid" class="fingerprint-grid"></div>
+        </article>
+
+        <article class="intel-card glass-panel reveal">
+          <div class="intel-head">
+            <span class="eyebrow">Comparison Layer</span>
+            <h3>Optimal zone alignment</h3>
+          </div>
+          <strong id="comparison-headline" class="headline-metric">--</strong>
+          <p id="comparison-subtext" class="muted-copy">--</p>
+          <ul id="comparison-list" class="signal-list compact"></ul>
+        </article>
+      </section>
+
+      <!-- Charts grid -->
+      <section class="subgrid">
+        <article class="wide-panel glass-panel reveal">
+          <div class="panel-title-row">
+            <div>
+              <span class="eyebrow">Performance Trajectory</span>
+              <h3>Score trend by study hours</h3>
+            </div>
+            <p id="trend-summary" class="muted-copy">--</p>
+          </div>
+          <canvas id="trendChart" aria-label="Score trend chart"></canvas>
+        </article>
+
+        <article class="glass-panel reveal" style="padding:24px;">
+          <div class="panel-title-row">
+            <div>
+              <span class="eyebrow">Feature Comparison</span>
+              <h3>Input stack</h3>
+            </div>
+          </div>
+          <canvas id="barChart" aria-label="Input comparison chart"></canvas>
+        </article>
+
+        <article class="glass-panel reveal" style="padding:24px;">
+          <div class="panel-title-row">
+            <div>
+              <span class="eyebrow">Archetype Intelligence</span>
+              <h3>Cluster distribution</h3>
+            </div>
+          </div>
+          <canvas id="pieChart" aria-label="Cluster distribution chart"></canvas>
+        </article>
+      </section>
+
+      <!-- Lower intel grid -->
+      <section class="intel-grid lower">
+        <article class="intel-card glass-panel reveal">
+          <div class="intel-head">
+            <span class="eyebrow">Console Notes</span>
+            <h3>Profile summary</h3>
+          </div>
+          <div id="profile-summary" class="summary-pills"></div>
+        </article>
+
+        <article class="intel-card glass-panel reveal">
+          <div class="intel-head">
+            <span class="eyebrow">Signal Cards</span>
+            <h3>Decision highlights</h3>
+          </div>
+          <div id="insight-cards" class="insight-cards"></div>
+        </article>
+
+        <article class="intel-card glass-panel reveal">
+          <div class="intel-head">
+            <span class="eyebrow">History Hook</span>
+            <h3>Saved runs</h3>
+          </div>
+          <div id="history-hook" class="history-hook">
+            <p>This run is saved to your local history. View all runs in the History section.</p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <a href="/history" class="btn btn-ghost btn-sm">View History →</a>
+            </div>
+          </div>
+        </article>
+      </section>
+
+    </div><!-- /results-section -->
+  </section><!-- /results-stage -->
+</div><!-- /dashboard-grid -->
+{% endblock %}
