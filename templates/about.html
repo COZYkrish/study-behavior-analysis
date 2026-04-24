@@ -1,25 +1,225 @@
 {% extends "base.html" %}
-{% block title %}About Model - Study Behavior Analyzer{% endblock %}
+{% block title %}About the Model — Study Behavior Analyzer{% endblock %}
 {% block body_class %}about-page{% endblock %}
+
 {% block content %}
-<section class="about-hero section-shell">
-  <h1>About the Model</h1>
-  <div class="about-cards">
-    <div class="about-card glass-panel">
-      <h2>Dataset</h2>
-      <p>Student performance data, anonymized and aggregated, powers the model. Key features: study hours, attendance, participation.</p>
+<div class="section-shell">
+
+  <!-- ═══ Hero ═══ -->
+  <header class="page-hero">
+    <span class="eyebrow reveal">The Intelligence</span>
+    <h1 class="reveal">The model stack behind the console.</h1>
+    <p class="lead reveal">
+      Three machine-learning systems trained on over one million anonymized student records,
+      working in parallel to decode behavior into a performance signal.
+    </p>
+  </header>
+
+  <!-- ═══ Dataset ═══ -->
+  <section class="about-section">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Dataset Anatomy</span>
+      <h2>The training foundation.</h2>
     </div>
-    <div class="about-card glass-panel">
-      <h2>Metrics</h2>
-      <ul>
-        <li>Classifier Accuracy: <strong>{{ meta.metrics.classifier.accuracy | round(2) * 100 }}%</strong></li>
-        <li>Regression R²: <strong>{{ meta.metrics.regression.r2 | round(2) }}</strong></li>
-      </ul>
+    <div class="about-cols">
+      <div class="about-card-panel glass-panel reveal">
+        <h3>Source &amp; Scale</h3>
+        <p>
+          A large-scale academic behavior dataset, anonymized and aggregated across diverse student populations.
+          Records span multiple academic terms, delivering broad behavioral variation.
+        </p>
+        <div class="model-metrics" style="margin-top:18px;">
+          <div class="model-metric-row">
+            <span>Training records</span>
+            <strong>1M+</strong>
+          </div>
+          <div class="model-metric-row">
+            <span>Behavioral features</span>
+            <strong>3</strong>
+          </div>
+          <div class="model-metric-row">
+            <span>Target variables</span>
+            <strong>2</strong>
+          </div>
+        </div>
+      </div>
+      <div class="about-card-panel glass-panel reveal">
+        <h3>Input Features</h3>
+        <p>Three behavioral signals form the complete input spine for all three models.</p>
+        <div class="model-metrics" style="margin-top:18px;">
+          <div class="model-metric-row">
+            <span>Weekly self-study hours</span>
+            <strong>0 – 40 h</strong>
+          </div>
+          <div class="model-metric-row">
+            <span>Attendance percentage</span>
+            <strong>0 – 100%</strong>
+          </div>
+          <div class="model-metric-row">
+            <span>Class participation</span>
+            <strong>0 – 10</strong>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="about-card glass-panel">
-      <h2>Confidence &amp; Limits</h2>
-      <p>Predictions are probabilistic, not deterministic. Model confidence is shown for each result. Outliers and rare archetypes may have lower reliability.</p>
+  </section>
+
+  <!-- ═══ Model Stack ═══ -->
+  <section class="about-section">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Model Stack</span>
+      <h2>Three systems, one surface.</h2>
     </div>
-  </div>
-</section>
+    <div class="model-stack-grid">
+
+      <div class="model-card glass-panel reveal" data-tilt>
+        <span class="model-card-icon">📈</span>
+        <span class="model-type">Gradient Boosting Regressor</span>
+        <h3>Score Regression</h3>
+        <p>Predicts numeric academic score from the three input features. Trained to minimize residual error across the full 0–100 score distribution.</p>
+        <div class="model-metrics">
+          <div class="model-metric-row">
+            <span>R² (fit coefficient)</span>
+            <strong>{{ "%.4f"|format(meta.metrics.regression.r2) }}</strong>
+          </div>
+          <div class="model-metric-row">
+            <span>RMSE (error margin)</span>
+            <strong>{{ "%.2f"|format(meta.metrics.regression.rmse) }}</strong>
+          </div>
+          <div class="model-metric-row">
+            <span>Output range</span>
+            <strong>0 – 100</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="model-card glass-panel reveal" data-tilt>
+        <span class="model-card-icon">⚡</span>
+        <span class="model-type">Gradient Boosting Classifier</span>
+        <h3>Productivity Classification</h3>
+        <p>Classifies each student profile into a productivity tier. Three-class output with per-class probability scores for reliability measurement.</p>
+        <div class="model-metrics">
+          <div class="model-metric-row">
+            <span>Overall accuracy</span>
+            <strong>{{ "%.1f"|format(meta.metrics.classifier.accuracy * 100) }}%</strong>
+          </div>
+          <div class="model-metric-row">
+            <span>Output classes</span>
+            <strong>High / Medium / Low</strong>
+          </div>
+          <div class="model-metric-row">
+            <span>Confidence method</span>
+            <strong>predict_proba</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="model-card glass-panel reveal" data-tilt>
+        <span class="model-card-icon">🔮</span>
+        <span class="model-type">K-Means Clustering</span>
+        <h3>Archetype Assignment</h3>
+        <p>Groups student behavior into three learned archetypes using scaled feature distances to cluster centroids. No labels — fully unsupervised.</p>
+        <div class="model-metrics">
+          <div class="model-metric-row">
+            <span>Clusters (archetypes)</span>
+            <strong>3</strong>
+          </div>
+          <div class="model-metric-row">
+            <span>Assignment method</span>
+            <strong>Nearest centroid</strong>
+          </div>
+          <div class="model-metric-row">
+            <span>Feature space</span>
+            <strong>StandardScaler</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ Confidence System ═══ -->
+  <section class="about-section">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Confidence System</span>
+      <h2>How reliability is measured.</h2>
+    </div>
+    <div class="about-cols">
+      <div class="about-card-panel glass-panel reveal">
+        <h3>Reliability Band</h3>
+        <p>
+          The reliability score is not a single model metric — it's a composite of classifier confidence
+          and benchmark alignment, weighted to reflect the most informative signal.
+        </p>
+        <div class="confidence-formula">
+          reliability = (top_classifier_prob × 0.6) + (alignment% × 0.4)
+        </div>
+        <div class="model-metrics" style="margin-top:18px;">
+          <div class="model-metric-row"><span>High</span><strong>≥ 75%</strong></div>
+          <div class="model-metric-row"><span>Moderate</span><strong>55 – 74%</strong></div>
+          <div class="model-metric-row"><span>Exploratory</span><strong>&lt; 55%</strong></div>
+        </div>
+      </div>
+      <div class="about-card-panel glass-panel reveal">
+        <h3>Benchmark Alignment</h3>
+        <p>
+          Each of the three inputs is compared against an empirically-derived optimal band.
+          Alignment is the percentage of inputs that sit within their target range,
+          contributing to overall confidence and optimization recommendations.
+        </p>
+        <div class="model-metrics" style="margin-top:18px;">
+          <div class="model-metric-row"><span>Study hours optimal band</span><strong>16 – 24 h/wk</strong></div>
+          <div class="model-metric-row"><span>Attendance optimal band</span><strong>85 – 95%</strong></div>
+          <div class="model-metric-row"><span>Participation optimal band</span><strong>6.0 – 8.5 / 10</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Limitations ═══ -->
+  <section class="about-section">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Honest Limitations</span>
+      <h2>Where the model has edges.</h2>
+    </div>
+    <div class="limitation-list">
+      <div class="limitation-item glass-panel reveal">
+        <span class="limitation-icon">⚠️</span>
+        <div>
+          <strong>Predictions are probabilistic, not deterministic</strong>
+          <p>Score forecasts represent a statistical expectation based on similar observed profiles — not a guarantee. Real outcomes include factors the model cannot observe.</p>
+        </div>
+      </div>
+      <div class="limitation-item glass-panel reveal">
+        <span class="limitation-icon">🔄</span>
+        <div>
+          <strong>Boundary condition profiles have lower confidence</strong>
+          <p>Students with very low or very high values on a single metric often sit near classifier boundaries where small changes can flip the predicted class. The reliability band accounts for this.</p>
+        </div>
+      </div>
+      <div class="limitation-item glass-panel reveal">
+        <span class="limitation-icon">📊</span>
+        <div>
+          <strong>Only three features are used</strong>
+          <p>Study hours, attendance, and participation are powerful behavioral signals but incomplete. Factors like subject difficulty, external stress, test anxiety, and learning style are not captured.</p>
+        </div>
+      </div>
+      <div class="limitation-item glass-panel reveal">
+        <span class="limitation-icon">🌐</span>
+        <div>
+          <strong>Dataset demographics may not generalize perfectly</strong>
+          <p>The training data represents a particular slice of academic environments. Profiles from significantly different institutions or curricula may be less well represented.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="cta-banner reveal">
+    <h2>See the model in action.</h2>
+    <p>Enter your study behavior profile and receive the full intelligence output — score, archetype, fingerprint, and guidance.</p>
+    <a href="/dashboard" class="btn btn-primary" id="about-cta-btn">Open Mission Control</a>
+  </section>
+
+</div>
 {% endblock %}
