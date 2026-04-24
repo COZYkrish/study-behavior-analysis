@@ -1,30 +1,238 @@
 {% extends "base.html" %}
-{% block title %}How It Works - Study Behavior Analyzer{% endblock %}
+{% block title %}How It Works — Study Behavior Analyzer{% endblock %}
 {% block body_class %}howitworks-page{% endblock %}
+
 {% block content %}
-<section class="howitworks-hero section-shell">
-  <h1>How It Works</h1>
-  <div class="scroll-story">
-    <div class="story-stage glass-panel">
-      <h2>Data Ingestion</h2>
-      <p>Student behavior data is securely collected and normalized for analysis.</p>
+<div class="section-shell">
+
+  <!-- ═══ Hero ═══ -->
+  <header class="page-hero">
+    <span class="eyebrow reveal">System Story</span>
+    <h1 class="reveal">Five stages from raw input<br>to performance signal.</h1>
+    <p class="lead reveal">
+      Every prediction is the result of a disciplined pipeline — normalization, regression, classification,
+      clustering, and optimization — all executing in parallel on three behavioral inputs.
+    </p>
+  </header>
+
+  <!-- ═══ Pipeline ═══ -->
+  <section class="pipeline-section">
+    <div class="pipeline-container">
+
+      <!-- Left spine (step dots + connectors) -->
+      <div class="pipeline-spine">
+        <div class="spine-dot">01</div>
+        <div class="spine-line"></div>
+        <div class="spine-dot">02</div>
+        <div class="spine-line"></div>
+        <div class="spine-dot">03</div>
+        <div class="spine-line"></div>
+        <div class="spine-dot">04</div>
+        <div class="spine-line"></div>
+        <div class="spine-dot">05</div>
+      </div>
+
+      <!-- Right content -->
+      <div class="pipeline-steps">
+
+        <!-- Stage 1 -->
+        <div class="pipeline-step reveal">
+          <span class="eyebrow step-tag">Stage 1 — Data Ingestion</span>
+          <h3>Behavior vectors enter the pipeline</h3>
+          <p>
+            The user provides three behavioral signals: weekly self-study hours (0–40), attendance percentage (0–100),
+            and class participation (0–10). Each value is validated for range and completeness before proceeding.
+          </p>
+          <div class="step-detail-card">
+            <div class="step-detail-item">
+              <strong>study_hours</strong>
+              <span>Max: 40 h/wk</span>
+            </div>
+            <div class="step-detail-item">
+              <strong>attendance</strong>
+              <span>Range: 0–100%</span>
+            </div>
+            <div class="step-detail-item">
+              <strong>participation</strong>
+              <span>Scale: 0–10</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="pipeline-step reveal">
+          <span class="eyebrow step-tag">Stage 2 — Feature Normalization</span>
+          <h3>StandardScaler prepares the vector</h3>
+          <p>
+            A StandardScaler (fitted on the full training population) transforms raw inputs into
+            zero-mean, unit-variance features. This is critical for both the distance-based clustering and
+            the gradient-boosted models to operate on a level feature surface.
+          </p>
+          <div class="step-detail-card">
+            <div class="step-detail-item">
+              <strong>Scaler type</strong>
+              <span>StandardScaler</span>
+            </div>
+            <div class="step-detail-item">
+              <strong>Fit source</strong>
+              <span>Training population</span>
+            </div>
+            <div class="step-detail-item">
+              <strong>Output</strong>
+              <span>z-score vector</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="pipeline-step reveal">
+          <span class="eyebrow step-tag">Stage 3 — Score Regression</span>
+          <h3>Gradient boosting predicts the academic score</h3>
+          <p>
+            A gradient-boosted regressor takes the scaled feature vector and outputs a continuous score prediction
+            in the 0–100 range. The model was trained to minimize RMSE and achieves an R² of
+            <strong style="color:var(--cyan);">{{ "%.4f"|format(meta.metrics.regression.r2) }}</strong> on held-out data,
+            with a residual error of ±{{ "%.2f"|format(meta.metrics.regression.rmse) }} score points.
+          </p>
+          <div class="step-detail-card">
+            <div class="step-detail-item">
+              <strong>Algorithm</strong>
+              <span>GradientBoostingRegressor</span>
+            </div>
+            <div class="step-detail-item">
+              <strong>R²</strong>
+              <span>{{ "%.4f"|format(meta.metrics.regression.r2) }}</span>
+            </div>
+            <div class="step-detail-item">
+              <strong>RMSE</strong>
+              <span>{{ "%.2f"|format(meta.metrics.regression.rmse) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="pipeline-step reveal">
+          <span class="eyebrow step-tag">Stage 4 — Productivity Classification</span>
+          <h3>A classifier maps behavior to a productivity tier</h3>
+          <p>
+            A gradient-boosted classifier assigns one of three productivity labels — High, Medium, or Low —
+            and optionally returns per-class probability scores via <em>predict_proba</em>. The top probability
+            feeds directly into the reliability band calculation. Overall accuracy:
+            <strong style="color:var(--cyan);">{{ "%.1f"|format(meta.metrics.classifier.accuracy * 100) }}%</strong>.
+          </p>
+          <div class="step-detail-card">
+            <div class="step-detail-item">
+              <strong>Algorithm</strong>
+              <span>GradientBoostingClassifier</span>
+            </div>
+            <div class="step-detail-item">
+              <strong>Output classes</strong>
+              <span>High / Medium / Low</span>
+            </div>
+            <div class="step-detail-item">
+              <strong>Confidence</strong>
+              <span>predict_proba</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 5 -->
+        <div class="pipeline-step reveal">
+          <span class="eyebrow step-tag">Stage 5 — Archetype Clustering</span>
+          <h3>K-Means assigns a behavioral archetype</h3>
+          <p>
+            The scaled feature vector is compared against three cluster centroids using Euclidean distance.
+            The nearest centroid determines the archetype — Consistent Learner, Night Owl, or Last-Minute Crammer.
+            Each archetype carries a behavior profile, percentage distribution, and description.
+          </p>
+          <div class="step-detail-card">
+            <div class="step-detail-item">
+              <strong>Algorithm</strong>
+              <span>K-Means (k=3)</span>
+            </div>
+            <div class="step-detail-item">
+              <strong>Assignment</strong>
+              <span>Nearest centroid</span>
+            </div>
+            <div class="step-detail-item">
+              <strong>Archetypes</strong>
+              <span>3 named clusters</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /pipeline-steps -->
+    </div><!-- /pipeline-container -->
+
+    <!-- Optimization surface callout -->
+    <div class="story-panel glass-panel reveal" style="margin-top:50px;" data-tilt>
+      <span class="story-step">Output Surface</span>
+      <h3>Results are synthesized into an optimization surface</h3>
+      <p>
+        Score, productivity class, archetype, benchmark alignment, confidence reliability, behavior fingerprint,
+        trend curve, and actionable suggestions are all computed from the above pipeline and returned in a single
+        structured API response — ready for the mission-control UI to render.
+      </p>
     </div>
-    <div class="story-stage glass-panel">
-      <h2>Model Interpretation</h2>
-      <p>Features are scaled and interpreted by the ML pipeline for robust predictions.</p>
+  </section>
+
+  <!-- ═══ Tech Spec ═══ -->
+  <section class="about-section">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Technical Spec</span>
+      <h2>Stack and dependencies.</h2>
     </div>
-    <div class="story-stage glass-panel">
-      <h2>Prediction Engine</h2>
-      <p>Regression and classification models generate score outlook and productivity archetype.</p>
+    <div class="tech-spec-panel glass-panel reveal">
+      <div class="tech-spec-grid">
+        <div class="tech-spec-item">
+          <strong>ML Framework</strong>
+          <span>scikit-learn</span>
+        </div>
+        <div class="tech-spec-item">
+          <strong>Model Persistence</strong>
+          <span>joblib (.pkl)</span>
+        </div>
+        <div class="tech-spec-item">
+          <strong>Backend</strong>
+          <span>Python / Flask</span>
+        </div>
+        <div class="tech-spec-item">
+          <strong>Feature Engineering</strong>
+          <span>StandardScaler</span>
+        </div>
+        <div class="tech-spec-item">
+          <strong>Regressor</strong>
+          <span>GradientBoostingRegressor</span>
+        </div>
+        <div class="tech-spec-item">
+          <strong>Classifier</strong>
+          <span>GradientBoostingClassifier</span>
+        </div>
+        <div class="tech-spec-item">
+          <strong>Clustering</strong>
+          <span>KMeans (k=3)</span>
+        </div>
+        <div class="tech-spec-item">
+          <strong>Frontend 3D</strong>
+          <span>Three.js r156</span>
+        </div>
+        <div class="tech-spec-item">
+          <strong>Charts</strong>
+          <span>Chart.js 4.4</span>
+        </div>
+      </div>
     </div>
-    <div class="story-stage glass-panel">
-      <h2>Behavior Archetypes</h2>
-      <p>Profiles are mapped to archetypes for actionable insights.</p>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="cta-banner reveal">
+    <h2>Experience the pipeline live.</h2>
+    <p>The dashboard runs all five stages on every form submission — typically in under 100ms.</p>
+    <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+      <a href="/dashboard" class="btn btn-primary" id="hiw-cta-btn">Launch Dashboard</a>
+      <a href="/study-types" class="btn btn-secondary" id="hiw-archetypes-btn">Explore Archetypes</a>
     </div>
-    <div class="story-stage glass-panel">
-      <h2>Optimization Guidance</h2>
-      <p>Personalized recommendations are surfaced for optimal study performance.</p>
-    </div>
-  </div>
-</section>
+  </section>
+
+</div>
 {% endblock %}
