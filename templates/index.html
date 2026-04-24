@@ -1,187 +1,210 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Study Behavior Analyzer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-</head>
-<body class="landing-page">
-  <div class="site-shell">
-    <div class="ambient ambient-a" data-parallax data-depth="0.18"></div>
-    <div class="ambient ambient-b" data-parallax data-depth="-0.12"></div>
-    <div class="ambient ambient-c" data-parallax data-depth="0.08"></div>
-    <div class="grid-floor"></div>
+{% extends "base.html" %}
+{% block title %}Study Behavior Analyzer — Predictive Learning Console{% endblock %}
+{% block body_class %}landing-page{% endblock %}
 
-    <header class="topbar glass-panel">
-      <a href="/" class="brand-mark">
-        <span class="brand-kicker">SB</span>
-        <span class="brand-copy">
-          <strong>Study Behavior Analyzer</strong>
-          <small>Adaptive student intelligence engine</small>
-        </span>
-      </a>
-      <nav class="topnav">
-        <a href="#capabilities">Capabilities</a>
-        <a href="#story">System Story</a>
-        <a href="#console">Console</a>
-        <a href="/dashboard" class="btn btn-primary">Launch Analyzer</a>
-      </nav>
-    </header>
+{% block content %}
+<!-- ═══════ HERO ═══════ -->
+<section class="hero-scene section-shell">
+  <div class="hero-copy">
+    <span class="eyebrow">Predictive Learning Console</span>
+    <h1>
+      Turn study habits into a
+      <span class="hero-headline-gradient">cinematic performance signal.</span>
+    </h1>
+    <p class="lead">
+      A futuristic intelligence surface that models score outlook, productivity mode,
+      and study archetype from behavior patterns — not guesswork.
+    </p>
+    <div class="hero-actions">
+      <a href="/dashboard" class="btn btn-primary" id="hero-cta-primary">Enter Mission Control</a>
+      <a href="/how-it-works" class="btn btn-secondary" id="hero-cta-secondary">Explore the System</a>
+    </div>
 
-    <main>
-      <section class="hero-scene section-shell">
-        <div class="hero-copy reveal">
-          <span class="eyebrow">Predictive Learning Console</span>
-          <h1>Turn raw study habits into a cinematic performance signal.</h1>
-          <p>
-            A futuristic intelligence surface that models score outlook, productivity mode,
-            and study archetype from behavior patterns instead of guesswork.
-          </p>
-          <div class="hero-actions">
-            <a href="/dashboard" class="btn btn-primary">Enter Mission Control</a>
-            <a href="#story" class="btn btn-secondary">Explore the Scroll Story</a>
-          </div>
-          <div class="hero-metrics">
-            <article class="metric-chip glass-panel reveal">
-              <span class="metric-value" data-count="1" data-suffix="M+">0</span>
-              <span class="metric-label">Profiles modeled</span>
-            </article>
-            <article class="metric-chip glass-panel reveal">
-              <span class="metric-value" data-count="{{ overview.accuracy }}" data-suffix="%">0</span>
-              <span class="metric-label">Classifier accuracy</span>
-            </article>
-            <article class="metric-chip glass-panel reveal">
-              <span class="metric-value" data-count="{{ overview.models }}">0</span>
-              <span class="metric-label">Inference systems</span>
-            </article>
-          </div>
-        </div>
-
-        <div class="hero-stage reveal">
-          <div class="hero-orbit" data-tilt>
-            <div class="orbit-ring orbit-ring-a"></div>
-            <div class="orbit-ring orbit-ring-b"></div>
-            <div class="hero-core glass-panel">
-              <span class="core-kicker">Live model spine</span>
-              <h2>Behavior becomes signal.</h2>
-              <p>Score regression, productivity classification, and archetype clustering rendered as one premium control surface.</p>
-            </div>
-            <article class="floating-node node-a glass-panel">
-              <span>Regression R2</span>
-              <strong>{{ "%.2f"|format(meta.metrics.regression.r2) }}</strong>
-            </article>
-            <article class="floating-node node-b glass-panel">
-              <span>RMSE</span>
-              <strong>{{ "%.2f"|format(meta.metrics.regression.rmse) }}</strong>
-            </article>
-            <article class="floating-node node-c glass-panel">
-              <span>Decision band</span>
-              <strong>High / Medium / Low</strong>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="capabilities" class="section-shell section-stack">
-        <div class="section-heading reveal">
-          <span class="eyebrow">Capabilities</span>
-          <h2>Built like a product reveal, not a classroom demo.</h2>
-        </div>
-        <div class="capability-grid">
-          <article class="capability-card glass-panel reveal" data-tilt>
-            <span class="card-index">01</span>
-            <h3>Score Forecasting</h3>
-            <p>Estimate academic output from weekly effort, attendance discipline, and classroom participation.</p>
-          </article>
-          <article class="capability-card glass-panel reveal" data-tilt>
-            <span class="card-index">02</span>
-            <h3>Productivity Intelligence</h3>
-            <p>Convert behavior into a directional productivity class and reliability signal.</p>
-          </article>
-          <article class="capability-card glass-panel reveal" data-tilt>
-            <span class="card-index">03</span>
-            <h3>Archetype Mapping</h3>
-            <p>Place students inside recognizable study fingerprints that explain how they operate.</p>
-          </article>
-          <article class="capability-card glass-panel reveal" data-tilt>
-            <span class="card-index">04</span>
-            <h3>Optimization Guidance</h3>
-            <p>Translate model output into action bands, improvement cues, and score-lift narratives.</p>
-          </article>
-        </div>
-      </section>
-
-      <section id="story" class="section-shell story-section">
-        <div class="story-rail">
-          <aside class="story-sticky glass-panel reveal">
-            <span class="eyebrow">Scroll Story</span>
-            <h2>A layered narrative with depth, motion, and system intent.</h2>
-            <p>As the page moves, the interface reveals how study behavior is ingested, interpreted, and projected into a performance outlook.</p>
-          </aside>
-          <div class="story-panels">
-            <article class="story-panel glass-panel reveal" data-tilt>
-              <span class="story-step">Ingest</span>
-              <h3>Behavior vectors enter the pipeline</h3>
-              <p>Weekly self-study hours, attendance, and participation are treated as the core behavior spine.</p>
-            </article>
-            <article class="story-panel glass-panel reveal" data-tilt>
-              <span class="story-step">Interpret</span>
-              <h3>Three models create a composite reading</h3>
-              <p>The app aligns regression, classification, and clustering instead of relying on a single score.</p>
-            </article>
-            <article class="story-panel glass-panel reveal" data-tilt>
-              <span class="story-step">Project</span>
-              <h3>The console surfaces trajectory</h3>
-              <p>Users see score outlook, archetype intelligence, and the most efficient correction path.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section-shell console-preview" id="console">
-        <div class="section-heading reveal">
-          <span class="eyebrow">Console Preview</span>
-          <h2>A dashboard designed like mission control.</h2>
-        </div>
-        <div class="console-frame glass-panel reveal" data-tilt>
-          <div class="console-sidebar">
-            <span class="console-label">Input lattice</span>
-            <ul>
-              <li>Study hours modulation</li>
-              <li>Attendance coherence</li>
-              <li>Participation amplitude</li>
-            </ul>
-          </div>
-          <div class="console-screen">
-            <div class="screen-head">
-              <span>AI Insights</span>
-              <span>Archetype intelligence</span>
-              <span>Trajectory scan</span>
-            </div>
-            <div class="screen-grid">
-              <article class="screen-card">
-                <strong>{{ "%.0f"|format(meta.metrics.classifier.accuracy * 100) }}%</strong>
-                <span>Productivity certainty channel</span>
-              </article>
-              <article class="screen-card">
-                <strong>{{ "%.2f"|format(meta.metrics.regression.r2) }}</strong>
-                <span>Predictive fit coefficient</span>
-              </article>
-              <article class="screen-card">
-                <strong>3D</strong>
-                <span>Scroll-driven storytelling system</span>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+    <div class="hero-metrics reveal-stagger">
+      <article class="metric-chip glass-panel reveal">
+        <span class="metric-value" data-count="1" data-suffix="M+">0</span>
+        <span class="metric-label">Profiles modeled</span>
+      </article>
+      <article class="metric-chip glass-panel reveal">
+        <span class="metric-value" data-count="{{ overview.accuracy }}" data-suffix="%">0</span>
+        <span class="metric-label">Classifier accuracy</span>
+      </article>
+      <article class="metric-chip glass-panel reveal">
+        <span class="metric-value" data-count="{{ overview.models }}">0</span>
+        <span class="metric-label">Inference systems</span>
+      </article>
+    </div>
   </div>
 
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
-</body>
-</html>
+  <!-- 3D Hero Sphere -->
+  <div class="hero-stage">
+    <div class="hero-sphere-wrap reveal">
+      <canvas id="hero-sphere"></canvas>
+      <!-- CSS fallback if WebGL unavailable -->
+      <div class="orbit-fallback">
+        <div class="hero-orbit" data-tilt>
+          <div class="orbit-ring orbit-ring-a"></div>
+          <div class="orbit-ring orbit-ring-b"></div>
+          <div class="hero-core glass-panel">
+            <span class="core-kicker">Live model spine</span>
+            <h2>Behavior becomes signal.</h2>
+            <p>Score regression, productivity classification, and archetype clustering rendered as one premium control surface.</p>
+          </div>
+          <article class="floating-node node-a glass-panel">
+            <span>Regression R²</span>
+            <strong>{{ "%.2f"|format(meta.metrics.regression.r2) }}</strong>
+          </article>
+          <article class="floating-node node-b glass-panel">
+            <span>RMSE</span>
+            <strong>{{ "%.2f"|format(meta.metrics.regression.rmse) }}</strong>
+          </article>
+          <article class="floating-node node-c glass-panel">
+            <span>Decision band</span>
+            <strong>Hi / Med / Lo</strong>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ STATS STRIP ═══════ -->
+<div class="section-shell">
+  <div class="stats-strip reveal">
+    <div class="stat-item">
+      <span class="stat-val" data-count="{{ overview.accuracy }}" data-suffix="%">--</span>
+      <span class="stat-label">Classifier accuracy</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-val" data-count="{{ "%.2f"|format(meta.metrics.regression.r2) }}">--</span>
+      <span class="stat-label">Regression R²</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-val" data-count="{{ "%.2f"|format(meta.metrics.regression.rmse) }}">--</span>
+      <span class="stat-label">Score RMSE</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-val" data-count="3">--</span>
+      <span class="stat-label">ML Models</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-val" data-count="3">--</span>
+      <span class="stat-label">Archetypes</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ CAPABILITIES ═══════ -->
+<section id="capabilities" class="section-shell section-stack">
+  <div class="section-heading reveal">
+    <span class="eyebrow">Capabilities</span>
+    <h2>Built like a product reveal, not a classroom demo.</h2>
+    <p class="muted-copy" style="margin-top:14px; max-width:56ch;">Four interconnected intelligence layers process every study signal into a high-resolution performance portrait.</p>
+  </div>
+  <div class="capability-grid">
+    <article class="capability-card glass-panel reveal" data-tilt>
+      <span class="card-index">01</span>
+      <h3>Score Forecasting</h3>
+      <p>Estimate academic output from weekly effort, attendance discipline, and classroom participation via gradient-boosted regression.</p>
+    </article>
+    <article class="capability-card glass-panel reveal" data-tilt>
+      <span class="card-index">02</span>
+      <h3>Productivity Intelligence</h3>
+      <p>Convert behavior into a directional productivity class — High, Medium, or Low — with confidence probability channels.</p>
+    </article>
+    <article class="capability-card glass-panel reveal" data-tilt>
+      <span class="card-index">03</span>
+      <h3>Archetype Mapping</h3>
+      <p>Place students inside recognizable study fingerprints via K-means clustering across {{ meta.cluster_names | length }} behavior archetypes.</p>
+    </article>
+    <article class="capability-card glass-panel reveal" data-tilt>
+      <span class="card-index">04</span>
+      <h3>Optimization Guidance</h3>
+      <p>Translate model output into action bands, improvement cues, benchmark alignment, and score-lift narratives.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ═══════ SCROLL STORY ═══════ -->
+<section id="story" class="section-shell story-section">
+  <div class="story-rail">
+    <aside class="story-sticky glass-panel reveal">
+      <span class="eyebrow">Scroll Story</span>
+      <h2>A layered narrative with depth, motion, and system intent.</h2>
+      <p>As the page moves, the interface reveals how study behavior is ingested, interpreted, and projected into a performance outlook.</p>
+      <a href="/how-it-works" class="btn btn-ghost" style="margin-top:22px; width:100%">Full Pipeline →</a>
+    </aside>
+    <div class="story-panels">
+      <article class="story-panel glass-panel reveal" data-tilt>
+        <span class="story-step">Ingest</span>
+        <h3>Behavior vectors enter the pipeline</h3>
+        <p>Weekly self-study hours, attendance percentage, and class participation are treated as the three-dimensional behavior spine. Raw inputs are normalized via a feature scaler trained on 1M+ student records.</p>
+      </article>
+      <article class="story-panel glass-panel reveal" data-tilt>
+        <span class="story-step">Interpret</span>
+        <h3>Three models create a composite reading</h3>
+        <p>A gradient-boosted regressor scores academic output. A classifier maps productivity to High / Medium / Low bands. A K-means cluster assigns a behavioral archetype. All three run simultaneously — not sequentially.</p>
+      </article>
+      <article class="story-panel glass-panel reveal" data-tilt>
+        <span class="story-step">Benchmark</span>
+        <h3>Optimal zones define the correction path</h3>
+        <p>Every result is measured against an empirically-derived optimal band: 16–24 study hours, 85–95% attendance, 6–8.5 participation. Alignment % directly shapes confidence reliability.</p>
+      </article>
+      <article class="story-panel glass-panel reveal" data-tilt>
+        <span class="story-step">Project</span>
+        <h3>The console surfaces trajectory</h3>
+        <p>Users see score outlook, archetype intelligence, behavior fingerprint, and the most efficient correction path — rendered as a mission-control-grade analytics surface.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CONSOLE PREVIEW ═══════ -->
+<section class="section-shell console-preview" id="console">
+  <div class="section-heading reveal">
+    <span class="eyebrow">Console Preview</span>
+    <h2>A dashboard designed like mission control.</h2>
+  </div>
+  <div class="console-frame glass-panel reveal" data-tilt>
+    <div class="console-sidebar">
+      <span class="console-label">Input lattice</span>
+      <ul>
+        <li>Study hours modulation</li>
+        <li>Attendance coherence</li>
+        <li>Participation amplitude</li>
+      </ul>
+    </div>
+    <div class="console-screen">
+      <div class="screen-head">
+        <span>AI Insights</span>
+        <span>Archetype intelligence</span>
+        <span>Trajectory scan</span>
+      </div>
+      <div class="screen-grid">
+        <article class="screen-card">
+          <strong>{{ "%.0f"|format(meta.metrics.classifier.accuracy * 100) }}%</strong>
+          <span>Productivity certainty channel</span>
+        </article>
+        <article class="screen-card">
+          <strong>{{ "%.2f"|format(meta.metrics.regression.r2) }}</strong>
+          <span>Predictive fit coefficient</span>
+        </article>
+        <article class="screen-card">
+          <strong>3</strong>
+          <span>Behavior archetypes</span>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CTA BANNER ═══════ -->
+<section class="section-shell cta-banner reveal">
+  <h2>Ready to decode your study signal?</h2>
+  <p>Enter three behavior metrics. Get score outlook, productivity mode, archetype, and a full optimization narrative in under a second.</p>
+  <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+    <a href="/dashboard" class="btn btn-primary" id="cta-enter-btn">Enter Mission Control</a>
+    <a href="/about" class="btn btn-secondary" id="cta-about-btn">About the Model</a>
+  </div>
+</section>
+{% endblock %}
