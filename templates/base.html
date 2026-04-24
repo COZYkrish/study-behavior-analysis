@@ -3,52 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Study Behavior Analyzer — AI-powered academic performance prediction from study behavior patterns." />
   <title>{% block title %}Study Behavior Analyzer{% endblock %}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
   {% block head %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
   <div class="site-shell">
+    <!-- Ambient light blobs -->
     <div class="ambient ambient-a" data-parallax data-depth="0.18"></div>
     <div class="ambient ambient-b" data-parallax data-depth="-0.12"></div>
     <div class="ambient ambient-c" data-parallax data-depth="0.08"></div>
     <div class="grid-floor"></div>
-    <header class="topbar glass-panel">
+
+    <header class="topbar glass-panel" id="topbar">
       <a href="/" class="brand-mark">
-        <span class="brand-kicker">SB</span>
+        <span class="brand-kicker">
+          <span class="brand-kicker-text">SB</span>
+          <span class="brand-glow"></span>
+        </span>
         <span class="brand-copy">
           <strong>Study Behavior Analyzer</strong>
           <small>Adaptive student intelligence engine</small>
         </span>
       </a>
-      <nav class="topnav">
+
+      <nav class="topnav" id="topnav" role="navigation" aria-label="Main navigation">
         <a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a>
         <a href="/dashboard" class="{% if request.path == '/dashboard' %}active{% endif %}">Dashboard</a>
-        <a href="/about" class="{% if request.path == '/about' %}active{% endif %}">About Model</a>
+        <a href="/about" class="{% if request.path == '/about' %}active{% endif %}">About</a>
         <a href="/how-it-works" class="{% if request.path == '/how-it-works' %}active{% endif %}">How It Works</a>
         <a href="/study-types" class="{% if request.path == '/study-types' %}active{% endif %}">Study Types</a>
         <a href="/insights" class="{% if request.path == '/insights' %}active{% endif %}">Insights</a>
         <a href="/history" class="{% if request.path == '/history' %}active{% endif %}">History</a>
       </nav>
+
+      <div class="topbar-right">
+        <a href="/dashboard" class="btn btn-primary btn-sm">Launch Analyzer</a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </header>
+
+    <!-- Mobile drawer -->
+    <nav class="mobile-drawer glass-panel" id="mobile-drawer" aria-hidden="true">
+      <a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a>
+      <a href="/dashboard" class="{% if request.path == '/dashboard' %}active{% endif %}">Dashboard</a>
+      <a href="/about" class="{% if request.path == '/about' %}active{% endif %}">About Model</a>
+      <a href="/how-it-works" class="{% if request.path == '/how-it-works' %}active{% endif %}">How It Works</a>
+      <a href="/study-types" class="{% if request.path == '/study-types' %}active{% endif %}">Study Types</a>
+      <a href="/insights" class="{% if request.path == '/insights' %}active{% endif %}">Insights</a>
+      <a href="/history" class="{% if request.path == '/history' %}active{% endif %}">History</a>
+    </nav>
+
     <main>
       {% block content %}{% endblock %}
     </main>
-    <footer class="site-footer glass-panel">
-      <div class="footer-content">
-        <span>&copy; 2026 Study Behavior Analyzer</span>
-        <span class="footer-links">
-          <a href="/about">About</a> |
-          <a href="/how-it-works">How It Works</a> |
+
+    <footer class="site-footer">
+      <div class="footer-inner glass-panel">
+        <div class="footer-brand">
+          <span class="brand-kicker-sm">SB</span>
+          <div>
+            <strong>Study Behavior Analyzer</strong>
+            <small>Futuristic academic intelligence platform</small>
+          </div>
+        </div>
+        <nav class="footer-nav">
+          <a href="/">Home</a>
+          <a href="/dashboard">Dashboard</a>
+          <a href="/about">About</a>
+          <a href="/how-it-works">How It Works</a>
+          <a href="/study-types">Study Types</a>
           <a href="/insights">Insights</a>
-        </span>
+          <a href="/history">History</a>
+        </nav>
+        <div class="footer-meta">
+          <span class="version-badge">v2.0 — Production</span>
+          <span>&copy; 2026 Study Behavior Analyzer</span>
+        </div>
       </div>
     </footer>
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/three@0.156.1/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="{{ url_for('static', filename='three-scene.js') }}"></script>
   <script src="{{ url_for('static', filename='script.js') }}"></script>
   {% block scripts %}{% endblock %}
 </body>
