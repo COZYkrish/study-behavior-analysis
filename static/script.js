@@ -388,20 +388,33 @@ function renderComparison(comparison) {
   setText("comparison-headline", `${pct}% aligned`);
   setText("comparison-subtext", comparison.headline || "");
 
-  /* Alignment gauge arc */
+  /* Animate alignment gauge arc */
   const gauge = document.getElementById("alignment-gauge");
   if (gauge) {
     const color = pct >= 67 ? "#61f2c7" : pct >= 34 ? "#6fe7ff" : "#ffd36f";
-    gauge.style.setProperty("--gauge-pct", String(pct));
-    gauge.style.setProperty("--gauge-color", color);
     gauge.setAttribute("aria-valuenow", String(pct));
+    const arc = gauge.querySelector("#gauge-arc");
+    const label = document.getElementById("gauge-center-text");
+    if (arc) {
+      const total = 173;
+      const offset = total - (pct / 100) * total;
+      arc.style.stroke = color;
+      arc.style.strokeDashoffset = String(total);
+      requestAnimationFrame(() => {
+        arc.style.transition = prefersReducedMotion ? "none" : "stroke-dashoffset 900ms cubic-bezier(0.16,1,0.3,1)";
+        arc.style.strokeDashoffset = String(offset);
+      });
+    }
+    if (label) {
+      label.style.color = color;
+      label.textContent = `${pct}%`;
+    }
   }
 
   const list = document.getElementById("comparison-list");
   if (!list) return;
   const details = comparison.detail || [];
-  const icons = ["◈", "◈", "◈"];
-  list.innerHTML = details.map((item, i) => {
+  list.innerHTML = details.map((item) => {
     const inBand = item.includes("inside");
     const icon = inBand ? "✦" : "◦";
     const cls  = inBand ? "style='color:var(--emerald)'" : "";
