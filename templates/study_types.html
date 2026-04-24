@@ -19,71 +19,163 @@
   <section class="study-types-section">
     <div class="archetype-grid">
 
-      {% set style_map = {
-        "Consistent Learner":  { "accent": "cyan",    "icon": "⬡", "pct": "~33", "pill_border": "rgba(111,231,255,0.22)", "pill_color": "#6fe7ff" },
-        "Night Owl":           { "accent": "emerald",  "icon": "🌙", "pct": "~32", "pill_border": "rgba(97,242,199,0.22)",  "pill_color": "#61f2c7" },
-        "Last-Minute Crammer": { "accent": "amber",    "icon": "⚡", "pct": "~35", "pill_border": "rgba(255,211,111,0.22)", "pill_color": "#ffd36f" }
-      } %}
-
       {% for profile in cluster_profiles %}
-        {% set s = style_map.get(profile.name, { "accent": "cyan", "icon": "⬡", "pct": "~33", "pill_border": "rgba(111,231,255,0.22)", "pill_color": "#6fe7ff" }) %}
-        {% set accent      = s.accent %}
-        {% set icon        = s.icon %}
-        {% set pop_pct     = s.pct %}
-        {% set pill_border = s.pill_border %}
-        {% set pill_color  = s.pill_color %}
-
-        <article class="archetype-panel glass-panel archetype-{{ accent }} reveal" data-tilt>
-
-          <div class="archetype-badge badge-{{ accent }}">{{ icon }} {{ profile.name }}</div>
-          <h2>{{ profile.name }}</h2>
-          <p class="archetype-desc">{{ profile.description }}</p>
-
-          <div class="gauge-group">
-            <!-- Study Hours -->
-            <div class="gauge-row">
-              <div class="gauge-label">
-                <span>Weekly Study Hours</span>
-                <strong>{{ profile.study_hours }}h</strong>
-              </div>
-              {% set w_hours = (profile.study_hours / 40 * 100) | round | int %}
-              <div class="gauge-track">
-                <div class="gauge-fill fill-{{ accent }}" style="width: {{ w_hours }}%;"></div>
-              </div>
+      {% if profile.name == "Consistent Learner" %}
+      <article class="archetype-panel glass-panel archetype-cyan reveal" data-tilt>
+        <div class="archetype-badge badge-cyan">⬡ Consistent Learner</div>
+        <h2>{{ profile.name }}</h2>
+        <p class="archetype-desc">{{ profile.description }}</p>
+        <div class="gauge-group">
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Weekly Study Hours</span>
+              <strong>{{ profile.study_hours }}h</strong>
             </div>
-            <!-- Attendance -->
-            <div class="gauge-row">
-              <div class="gauge-label">
-                <span>Attendance</span>
-                <strong>{{ profile.attendance }}%</strong>
-              </div>
-              {% set w_att = profile.attendance | round | int %}
-              <div class="gauge-track">
-                <div class="gauge-fill fill-{{ accent }}" style="width: {{ w_att }}%;"></div>
-              </div>
-            </div>
-            <!-- Participation -->
-            <div class="gauge-row">
-              <div class="gauge-label">
-                <span>Class Participation</span>
-                <strong>{{ profile.participation }} / 10</strong>
-              </div>
-              {% set w_part = (profile.participation / 10 * 100) | round | int %}
-              <div class="gauge-track">
-                <div class="gauge-fill fill-{{ accent }}" style="width: {{ w_part }}%;"></div>
-              </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-cyan" style="width: {{ (profile.study_hours / 40 * 100)|round|int }}%;"></div>
             </div>
           </div>
-
-          <div class="archetype-footer">
-            <span style="color:var(--muted); font-size:0.82rem;">Cluster distribution</span>
-            <span class="pop-pill metric-pill"
-                  style="color:{{ pill_color }}; border-color:{{ pill_border }};">
-              {{ pop_pct }}% of population
-            </span>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Attendance</span>
+              <strong>{{ profile.attendance }}%</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-cyan" style="width: {{ profile.attendance|round|int }}%;"></div>
+            </div>
           </div>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Class Participation</span>
+              <strong>{{ profile.participation }} / 10</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-cyan" style="width: {{ (profile.participation / 10 * 100)|round|int }}%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="archetype-footer">
+          <span class="text-muted" style="color:var(--muted); font-size:0.82rem;">Cluster distribution</span>
+          <span class="pop-pill metric-pill" style="color:var(--cyan); border-color:rgba(111,231,255,0.2);">~33% of population</span>
+        </div>
+      </article>
 
-        </article>
+      {% elif profile.name == "Night Owl" %}
+      <article class="archetype-panel glass-panel archetype-emerald reveal" data-tilt>
+        <div class="archetype-badge badge-emerald">🌙 Night Owl</div>
+        <h2>{{ profile.name }}</h2>
+        <p class="archetype-desc">{{ profile.description }}</p>
+        <div class="gauge-group">
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Weekly Study Hours</span>
+              <strong>{{ profile.study_hours }}h</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-emerald" style="width: {{ (profile.study_hours / 40 * 100)|round|int }}%;"></div>
+            </div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Attendance</span>
+              <strong>{{ profile.attendance }}%</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-emerald" style="width: {{ profile.attendance|round|int }}%;"></div>
+            </div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Class Participation</span>
+              <strong>{{ profile.participation }} / 10</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-emerald" style="width: {{ (profile.participation / 10 * 100)|round|int }}%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="archetype-footer">
+          <span style="color:var(--muted); font-size:0.82rem;">Cluster distribution</span>
+          <span class="pop-pill metric-pill" style="color:var(--emerald); border-color:rgba(97,242,199,0.2);">~32% of population</span>
+        </div>
+      </article>
+
+      {% elif profile.name == "Last-Minute Crammer" %}
+      <article class="archetype-panel glass-panel archetype-amber reveal" data-tilt>
+        <div class="archetype-badge badge-amber">⚡ Last-Minute Crammer</div>
+        <h2>{{ profile.name }}</h2>
+        <p class="archetype-desc">{{ profile.description }}</p>
+        <div class="gauge-group">
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Weekly Study Hours</span>
+              <strong>{{ profile.study_hours }}h</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-amber" style="width: {{ (profile.study_hours / 40 * 100)|round|int }}%;"></div>
+            </div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Attendance</span>
+              <strong>{{ profile.attendance }}%</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-amber" style="width: {{ profile.attendance|round|int }}%;"></div>
+            </div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Class Participation</span>
+              <strong>{{ profile.participation }} / 10</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-amber" style="width: {{ (profile.participation / 10 * 100)|round|int }}%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="archetype-footer">
+          <span style="color:var(--muted); font-size:0.82rem;">Cluster distribution</span>
+          <span class="pop-pill metric-pill" style="color:var(--amber); border-color:rgba(255,211,111,0.2);">~35% of population</span>
+        </div>
+      </article>
+
+      {% else %}
+      <article class="archetype-panel glass-panel archetype-cyan reveal" data-tilt>
+        <div class="archetype-badge badge-cyan">⬡ {{ profile.name }}</div>
+        <h2>{{ profile.name }}</h2>
+        <p class="archetype-desc">{{ profile.description }}</p>
+        <div class="gauge-group">
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Weekly Study Hours</span>
+              <strong>{{ profile.study_hours }}h</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-cyan" style="width: {{ (profile.study_hours / 40 * 100)|round|int }}%;"></div>
+            </div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Attendance</span>
+              <strong>{{ profile.attendance }}%</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-cyan" style="width: {{ profile.attendance|round|int }}%;"></div>
+            </div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Class Participation</span>
+              <strong>{{ profile.participation }} / 10</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-cyan" style="width: {{ (profile.participation / 10 * 100)|round|int }}%;"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+      {% endif %}
       {% endfor %}
 
     </div>
