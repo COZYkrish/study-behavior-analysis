@@ -32,7 +32,7 @@
               <strong>{{ profile.study_hours }}h</strong>
             </div>
             <div class="gauge-track">
-              <div class="gauge-fill fill-cyan" style="width: {{ (profile.study_hours / 40 * 100)|round|int }}%;"></div>
+              <div class="gauge-fill fill-cyan" data-w="{{ (profile.study_hours / 40 * 100)|round|int }}"></div>
             </div>
           </div>
           <div class="gauge-row">
@@ -41,7 +41,7 @@
               <strong>{{ profile.attendance }}%</strong>
             </div>
             <div class="gauge-track">
-              <div class="gauge-fill fill-cyan" style="width: {{ profile.attendance|round|int }}%;"></div>
+              <div class="gauge-fill fill-cyan" data-w="{{ profile.attendance|round|int }}"></div>
             </div>
           </div>
           <div class="gauge-row">
@@ -50,7 +50,7 @@
               <strong>{{ profile.participation }} / 10</strong>
             </div>
             <div class="gauge-track">
-              <div class="gauge-fill fill-cyan" style="width: {{ (profile.participation / 10 * 100)|round|int }}%;"></div>
+              <div class="gauge-fill fill-cyan" data-w="{{ (profile.participation / 10 * 100)|round|int }}"></div>
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@
               <strong>{{ profile.study_hours }}h</strong>
             </div>
             <div class="gauge-track">
-              <div class="gauge-fill fill-emerald" style="width: {{ (profile.study_hours / 40 * 100)|round|int }}%;"></div>
+              <div class="gauge-fill fill-emerald" data-w="{{ (profile.study_hours / 40 * 100)|round|int }}"></div>
             </div>
           </div>
           <div class="gauge-row">
@@ -81,7 +81,7 @@
               <strong>{{ profile.attendance }}%</strong>
             </div>
             <div class="gauge-track">
-              <div class="gauge-fill fill-emerald" style="width: {{ profile.attendance|round|int }}%;"></div>
+              <div class="gauge-fill fill-emerald" data-w="{{ profile.attendance|round|int }}"></div>
             </div>
           </div>
           <div class="gauge-row">
@@ -90,7 +90,7 @@
               <strong>{{ profile.participation }} / 10</strong>
             </div>
             <div class="gauge-track">
-              <div class="gauge-fill fill-emerald" style="width: {{ (profile.participation / 10 * 100)|round|int }}%;"></div>
+              <div class="gauge-fill fill-emerald" data-w="{{ (profile.participation / 10 * 100)|round|int }}"></div>
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@
               <strong>{{ profile.study_hours }}h</strong>
             </div>
             <div class="gauge-track">
-              <div class="gauge-fill fill-amber" style="width: {{ (profile.study_hours / 40 * 100)|round|int }}%;"></div>
+              <div class="gauge-fill fill-amber" data-w="{{ (profile.study_hours / 40 * 100)|round|int }}"></div>
             </div>
           </div>
           <div class="gauge-row">
@@ -121,7 +121,7 @@
               <strong>{{ profile.attendance }}%</strong>
             </div>
             <div class="gauge-track">
-              <div class="gauge-fill fill-amber" style="width: {{ profile.attendance|round|int }}%;"></div>
+              <div class="gauge-fill fill-amber" data-w="{{ profile.attendance|round|int }}"></div>
             </div>
           </div>
           <div class="gauge-row">
@@ -130,7 +130,7 @@
               <strong>{{ profile.participation }} / 10</strong>
             </div>
             <div class="gauge-track">
-              <div class="gauge-fill fill-amber" style="width: {{ (profile.participation / 10 * 100)|round|int }}%;"></div>
+              <div class="gauge-fill fill-amber" data-w="{{ (profile.participation / 10 * 100)|round|int }}"></div>
             </div>
           </div>
         </div>
@@ -152,7 +152,7 @@
               <strong>{{ profile.study_hours }}h</strong>
             </div>
             <div class="gauge-track">
-              <div class="gauge-fill fill-cyan" style="width: {{ (profile.study_hours / 40 * 100)|round|int }}%;"></div>
+              <div class="gauge-fill fill-cyan" data-w="{{ (profile.study_hours / 40 * 100)|round|int }}"></div>
             </div>
           </div>
           <div class="gauge-row">
@@ -161,7 +161,7 @@
               <strong>{{ profile.attendance }}%</strong>
             </div>
             <div class="gauge-track">
-              <div class="gauge-fill fill-cyan" style="width: {{ profile.attendance|round|int }}%;"></div>
+              <div class="gauge-fill fill-cyan" data-w="{{ profile.attendance|round|int }}"></div>
             </div>
           </div>
           <div class="gauge-row">
@@ -170,7 +170,7 @@
               <strong>{{ profile.participation }} / 10</strong>
             </div>
             <div class="gauge-track">
-              <div class="gauge-fill fill-cyan" style="width: {{ (profile.participation / 10 * 100)|round|int }}%;"></div>
+              <div class="gauge-fill fill-cyan" data-w="{{ (profile.participation / 10 * 100)|round|int }}"></div>
             </div>
           </div>
         </div>
@@ -200,4 +200,13 @@
   </section>
 
 </div>
+
+<script>
+  // Apply gauge widths via JS to avoid VS Code HTML linter errors with Jinja in style attributes
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.gauge-fill[data-w]').forEach(function(el) {
+      el.style.width = el.getAttribute('data-w') + '%';
+    });
+  });
+</script>
 {% endblock %}
