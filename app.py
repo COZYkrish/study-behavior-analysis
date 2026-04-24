@@ -58,10 +58,12 @@ def _get_models():
     return _MODELS
 
 
+@app.route("/")
 def index():
     return render_template("index.html", meta=META, overview=_build_overview_stats())
 
 
+@app.route("/dashboard")
 def dashboard():
     return render_template(
         "dashboard.html",
