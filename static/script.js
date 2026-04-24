@@ -23,7 +23,59 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeTiltCards();
   initializeParallax();
   initializePredictionFlow();
+  initializeScrollProgress();
+  initializeHamburger();
+  initializeHeroSphere();
+  initHistoryPageIfPresent();
 });
+
+function initializeScrollProgress() {
+  const bar = document.getElementById("scroll-progress");
+  if (!bar) return;
+  const update = () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    bar.style.width = `${pct}%`;
+  };
+  window.addEventListener("scroll", update, { passive: true });
+  update();
+}
+
+function initializeHamburger() {
+  const hamburger = document.getElementById("hamburger");
+  const drawer = document.getElementById("mobile-drawer");
+  if (!hamburger || !drawer) return;
+  hamburger.addEventListener("click", () => {
+    const open = hamburger.classList.toggle("open");
+    drawer.classList.toggle("open", open);
+    hamburger.setAttribute("aria-expanded", String(open));
+    drawer.setAttribute("aria-hidden", String(!open));
+  });
+  drawer.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      hamburger.classList.remove("open");
+      drawer.classList.remove("open");
+      hamburger.setAttribute("aria-expanded", "false");
+      drawer.setAttribute("aria-hidden", "true");
+    });
+  });
+}
+
+function initializeHeroSphere() {
+  if (window.SBAScene?.initHeroSphere) {
+    window.SBAScene.initHeroSphere("hero-sphere");
+  }
+  if (window.SBAScene?.initNodeNetwork) {
+    window.SBAScene.initNodeNetwork("node-network-canvas");
+  }
+}
+
+function initHistoryPageIfPresent() {
+  if (window.SBAHistory?.initHistoryPage) {
+    window.SBAHistory.initHistoryPage();
+  }
+}
 
 function initializeRangeValues() {
   bindRangeValue("study_hours", "study_hours_val", " h");
@@ -59,9 +111,12 @@ function initializeRevealObserver() {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.18 });
+  }, { threshold: 0.12 });
 
   revealNodes.forEach((node) => observer.observe(node));
+
+  /* Expose globally so history.js can add new items */
+  window.SBARevealObserver = observer;
 }
 
 function initializeCounters() {
@@ -225,6 +280,11 @@ function clearError() {
 function renderResults(data, payload, trend) {
   document.getElementById("placeholder")?.classList.add("hidden");
   document.getElementById("results-section")?.classList.remove("hidden");
+
+  /* Save this run to history */
+  if (window.SBAHistory?.saveRun) {
+    window.SBAHistory.saveRun(payload, data);
+  }
 
   animateNumber("result-score", data.score, 1);
   setText("result-narrative", data.narrative);
