@@ -287,6 +287,7 @@ function renderResults(data, payload, trend) {
   }
 
   animateNumber("result-score", data.score, 1);
+  animateScoreRing(data.score);
   setText("result-narrative", data.narrative);
 
   const prodMeta = PRODUCTIVITY_META[data.productivity] || {};
@@ -352,21 +353,60 @@ function renderSuggestionList(items) {
 function renderFingerprint(items) {
   const grid = document.getElementById("fingerprint-grid");
   if (!grid) return;
-  grid.innerHTML = items.map((item) => `
-    <article class="fingerprint-cell">
-      <strong>${escapeHtml(String(item.value))}${escapeHtml(item.unit || "")}</strong>
-      <span>${escapeHtml(item.label)}</span>
-    </article>
-  `).join("");
+
+  const COLORS = [
+    { bar: "#6fe7ff", glow: "rgba(111,231,255,0.25)" },
+    { bar: "#4ca5ff", glow: "rgba(76,165,255,0.25)" },
+    { bar: "#61f2c7", glow: "rgba(97,242,199,0.25)" },
+    { bar: "#ffd36f", glow: "rgba(255,211,111,0.25)" },
+  ];
+
+  grid.innerHTML = items.map((item, i) => {
+    const col = COLORS[i % COLORS.length];
+    const pct = Math.min(Math.max(item.value, 0), 100);
+    return `
+      <article class="fingerprint-cell">
+        <strong style="color:${col.bar}">${escapeHtml(String(item.value))}${escapeHtml(item.unit || "")}</strong>
+        <span>${escapeHtml(item.label)}</span>
+        <div class="fp-bar-track">
+          <div class="fp-bar-fill" data-pct="${pct}" style="background:${col.bar}; box-shadow: 0 0 10px ${col.glow}; width:0%"></div>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  /* Animate bars in on next frame so CSS transition triggers */
+  requestAnimationFrame(() => {
+    grid.querySelectorAll(".fp-bar-fill").forEach((bar) => {
+      bar.style.width = `${bar.dataset.pct}%`;
+    });
+  });
 }
 
 function renderComparison(comparison) {
-  setText("comparison-headline", `${comparison.alignment || 0}% aligned`);
+  const pct = comparison.alignment || 0;
+  setText("comparison-headline", `${pct}% aligned`);
   setText("comparison-subtext", comparison.headline || "");
+
+  /* Alignment gauge arc */
+  const gauge = document.getElementById("alignment-gauge");
+  if (gauge) {
+    const color = pct >= 67 ? "#61f2c7" : pct >= 34 ? "#6fe7ff" : "#ffd36f";
+    gauge.style.setProperty("--gauge-pct", String(pct));
+    gauge.style.setProperty("--gauge-color", color);
+    gauge.setAttribute("aria-valuenow", String(pct));
+  }
+
   const list = document.getElementById("comparison-list");
   if (!list) return;
   const details = comparison.detail || [];
-  list.innerHTML = details.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+  const icons = ["◈", "◈", "◈"];
+  list.innerHTML = details.map((item, i) => {
+    const inBand = item.includes("inside");
+    const icon = inBand ? "✦" : "◦";
+    const cls  = inBand ? "style='color:var(--emerald)'" : "";
+    return `<li ${cls}>${icon} ${escapeHtml(item)}</li>`;
+  }).join("");
 }
 
 function renderSummaryPills(summary) {
@@ -383,13 +423,26 @@ function renderSummaryPills(summary) {
 function renderInsightCards(items) {
   const container = document.getElementById("insight-cards");
   if (!container) return;
-  container.innerHTML = items.map((item) => `
+  const ICONS = ["◈", "⬡", "◉"];
+  container.innerHTML = items.map((item, i) => `
     <article class="insight-tile">
+      <div class="insight-tile-icon">${ICONS[i % ICONS.length]}</div>
       <strong>${escapeHtml(item.value)}</strong>
       <span>${escapeHtml(item.title)}</span>
       <p class="muted-copy">${escapeHtml(item.description)}</p>
     </article>
   `).join("");
+}
+
+/* Score ring animation */
+function animateScoreRing(score) {
+  const panel = document.querySelector(".score-panel");
+  if (!panel) return;
+  const pct = Math.min(Math.max(score, 0), 100);
+  const color = score >= 85 ? "#61f2c7" : score >= 70 ? "#6fe7ff" : "#ffd36f";
+  panel.style.setProperty("--ring-pct", String(pct));
+  panel.style.setProperty("--ring-color", color);
+  panel.classList.add("has-ring");
 }
 
 if (window.Chart) {

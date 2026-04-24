@@ -164,6 +164,15 @@
           </div>
           <strong id="comparison-headline" class="headline-metric">--</strong>
           <p id="comparison-subtext" class="muted-copy">--</p>
+          <!-- Alignment gauge arc -->
+          <div id="alignment-gauge" class="alignment-gauge" aria-role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <svg viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M10 65 A55 55 0 0 1 110 65" stroke="rgba(111,231,255,0.12)" stroke-width="8" stroke-linecap="round"/>
+              <path id="gauge-arc" d="M10 65 A55 55 0 0 1 110 65" stroke="var(--gauge-color,#6fe7ff)" stroke-width="8" stroke-linecap="round"
+                    stroke-dasharray="173" stroke-dashoffset="173"/>
+            </svg>
+            <span class="gauge-center-label" id="gauge-center-text">0%</span>
+          </div>
           <ul id="comparison-list" class="signal-list compact"></ul>
         </article>
       </section>
