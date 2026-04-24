@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Study Behavior Analyzer{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  {% block head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <div class="site-shell">
+    <div class="ambient ambient-a" data-parallax data-depth="0.18"></div>
+    <div class="ambient ambient-b" data-parallax data-depth="-0.12"></div>
+    <div class="ambient ambient-c" data-parallax data-depth="0.08"></div>
+    <div class="grid-floor"></div>
+    <header class="topbar glass-panel">
+      <a href="/" class="brand-mark">
+        <span class="brand-kicker">SB</span>
+        <span class="brand-copy">
+          <strong>Study Behavior Analyzer</strong>
+          <small>Adaptive student intelligence engine</small>
+        </span>
+      </a>
+      <nav class="topnav">
+        <a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a>
+        <a href="/dashboard" class="{% if request.path == '/dashboard' %}active{% endif %}">Dashboard</a>
+        <a href="/about" class="{% if request.path == '/about' %}active{% endif %}">About Model</a>
+        <a href="/how-it-works" class="{% if request.path == '/how-it-works' %}active{% endif %}">How It Works</a>
+        <a href="/study-types" class="{% if request.path == '/study-types' %}active{% endif %}">Study Types</a>
+        <a href="/insights" class="{% if request.path == '/insights' %}active{% endif %}">Insights</a>
+        <a href="/history" class="{% if request.path == '/history' %}active{% endif %}">History</a>
+      </nav>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer glass-panel">
+      <div class="footer-content">
+        <span>&copy; 2026 Study Behavior Analyzer</span>
+        <span class="footer-links">
+          <a href="/about">About</a> |
+          <a href="/how-it-works">How It Works</a> |
+          <a href="/insights">Insights</a>
+        </span>
+      </div>
+    </footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.156.1/build/three.min.js"></script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

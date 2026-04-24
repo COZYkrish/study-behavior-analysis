@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Insights - Study Behavior Analyzer{% endblock %}
+{% block body_class %}insights-page{% endblock %}
+{% block content %}
+<section class="insights-hero section-shell">
+  <h1>Optimal Zones &amp; Recommendations</h1>
+  <div class="insight-cards">
+    <div class="insight-card glass-panel">
+      <h2>Optimal Study Zone</h2>
+      <p>Weekly Study Hours: <strong>16-24</strong></p>
+      <p>Attendance: <strong>85-95%</strong></p>
+      <p>Participation: <strong>6-8.5 / 10</strong></p>
+    </div>
+    <div class="insight-card glass-panel">
+      <h2>Benchmark Logic</h2>
+      <p>Alignment with optimal bands increases predicted score and productivity reliability.</p>
+    </div>
+    <div class="insight-card glass-panel">
+      <h2>Actionable Guidance</h2>
+      <ul>
+        <li>Increase study hours if below 16/week</li>
+        <li>Push attendance above 85%</li>
+        <li>Boost participation above 6/10</li>
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock %}

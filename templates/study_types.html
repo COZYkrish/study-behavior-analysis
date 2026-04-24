@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Study Types - Study Behavior Analyzer{% endblock %}
+{% block body_class %}studytypes-page{% endblock %}
+{% block content %}
+<section class="studytypes-hero section-shell">
+  <h1>Study Archetypes</h1>
+  <div class="archetype-cards">
+    {% for profile in cluster_profiles %}
+    <div class="archetype-card glass-panel">
+      <h2>{{ profile.name }}</h2>
+      <ul>
+        <li><strong>Study Hours:</strong> {{ profile.study_hours }}</li>
+        <li><strong>Attendance:</strong> {{ profile.attendance }}%</li>
+        <li><strong>Participation:</strong> {{ profile.participation }} / 10</li>
+      </ul>
+      <p>{{ profile.description }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

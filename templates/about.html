@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}About Model - Study Behavior Analyzer{% endblock %}
+{% block body_class %}about-page{% endblock %}
+{% block content %}
+<section class="about-hero section-shell">
+  <h1>About the Model</h1>
+  <div class="about-cards">
+    <div class="about-card glass-panel">
+      <h2>Dataset</h2>
+      <p>Student performance data, anonymized and aggregated, powers the model. Key features: study hours, attendance, participation.</p>
+    </div>
+    <div class="about-card glass-panel">
+      <h2>Metrics</h2>
+      <ul>
+        <li>Classifier Accuracy: <strong>{{ meta.metrics.classifier.accuracy | round(2) * 100 }}%</strong></li>
+        <li>Regression R²: <strong>{{ meta.metrics.regression.r2 | round(2) }}</strong></li>
+      </ul>
+    </div>
+    <div class="about-card glass-panel">
+      <h2>Confidence &amp; Limits</h2>
+      <p>Predictions are probabilistic, not deterministic. Model confidence is shown for each result. Outliers and rare archetypes may have lower reliability.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}
