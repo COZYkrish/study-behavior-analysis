@@ -1,21 +1,203 @@
 {% extends "base.html" %}
-{% block title %}Study Types - Study Behavior Analyzer{% endblock %}
+{% block title %}Study Archetypes — Study Behavior Analyzer{% endblock %}
 {% block body_class %}studytypes-page{% endblock %}
+
 {% block content %}
-<section class="studytypes-hero section-shell">
-  <h1>Study Archetypes</h1>
-  <div class="archetype-cards">
-    {% for profile in cluster_profiles %}
-    <div class="archetype-card glass-panel">
-      <h2>{{ profile.name }}</h2>
-      <ul>
-        <li><strong>Study Hours:</strong> {{ profile.study_hours }}</li>
-        <li><strong>Attendance:</strong> {{ profile.attendance }}%</li>
-        <li><strong>Participation:</strong> {{ profile.participation }} / 10</li>
-      </ul>
-      <p>{{ profile.description }}</p>
+<div class="section-shell">
+
+  <!-- ═══ Hero ═══ -->
+  <header class="archetype-hero">
+    <span class="eyebrow reveal">Behavioral Archetypes</span>
+    <h1 class="reveal">Three behavior signatures.<br>One performance surface.</h1>
+    <p class="lead reveal" style="max-width:56ch; margin-top:14px;">
+      The clustering model learned three distinct study patterns from the training population.
+      Each archetype has a characteristic study hour cadence, attendance discipline, and classroom signal.
+    </p>
+  </header>
+
+  <!-- ═══ Archetype Cards ═══ -->
+  <section class="study-types-section">
+    <div class="archetype-grid">
+
+      {% for profile in cluster_profiles %}
+      {% if profile.name == "Consistent Learner" %}
+      <article class="archetype-panel glass-panel archetype-cyan reveal" data-tilt>
+        <div class="archetype-badge badge-cyan">⬡ Consistent Learner</div>
+        <h2>{{ profile.name }}</h2>
+        <p class="archetype-desc">{{ profile.description }}</p>
+        <div class="gauge-group">
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Weekly Study Hours</span>
+              <strong>{{ profile.study_hours }}h</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-cyan" style="width: {{ (profile.study_hours / 40 * 100)|round }}%"></div>
+            </div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Attendance</span>
+              <strong>{{ profile.attendance }}%</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-cyan" style="width: {{ profile.attendance|round }}%"></div>
+            </div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Class Participation</span>
+              <strong>{{ profile.participation }} / 10</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-cyan" style="width: {{ (profile.participation / 10 * 100)|round }}%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="archetype-footer">
+          <span class="text-muted" style="color:var(--muted); font-size:0.82rem;">Cluster distribution</span>
+          <span class="pop-pill metric-pill">~33% of population</span>
+        </div>
+      </article>
+
+      {% elif profile.name == "Night Owl" %}
+      <article class="archetype-panel glass-panel archetype-emerald reveal" data-tilt>
+        <div class="archetype-badge badge-emerald">🌙 Night Owl</div>
+        <h2>{{ profile.name }}</h2>
+        <p class="archetype-desc">{{ profile.description }}</p>
+        <div class="gauge-group">
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Weekly Study Hours</span>
+              <strong>{{ profile.study_hours }}h</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-emerald" style="width: {{ (profile.study_hours / 40 * 100)|round }}%"></div>
+            </div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Attendance</span>
+              <strong>{{ profile.attendance }}%</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-emerald" style="width: {{ profile.attendance|round }}%"></div>
+            </div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Class Participation</span>
+              <strong>{{ profile.participation }} / 10</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-emerald" style="width: {{ (profile.participation / 10 * 100)|round }}%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="archetype-footer">
+          <span style="color:var(--muted); font-size:0.82rem;">Cluster distribution</span>
+          <span class="pop-pill metric-pill" style="color:var(--emerald); border-color:rgba(97,242,199,0.2);">~32% of population</span>
+        </div>
+      </article>
+
+      {% elif profile.name == "Last-Minute Crammer" %}
+      <article class="archetype-panel glass-panel archetype-amber reveal" data-tilt>
+        <div class="archetype-badge badge-amber">⚡ Last-Minute Crammer</div>
+        <h2>{{ profile.name }}</h2>
+        <p class="archetype-desc">{{ profile.description }}</p>
+        <div class="gauge-group">
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Weekly Study Hours</span>
+              <strong>{{ profile.study_hours }}h</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-amber" style="width: {{ (profile.study_hours / 40 * 100)|round }}%"></div>
+            </div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Attendance</span>
+              <strong>{{ profile.attendance }}%</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-amber" style="width: {{ profile.attendance|round }}%"></div>
+            </div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Class Participation</span>
+              <strong>{{ profile.participation }} / 10</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-amber" style="width: {{ (profile.participation / 10 * 100)|round }}%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="archetype-footer">
+          <span style="color:var(--muted); font-size:0.82rem;">Cluster distribution</span>
+          <span class="pop-pill metric-pill" style="color:var(--amber); border-color:rgba(255,211,111,0.2);">~35% of population</span>
+        </div>
+      </article>
+
+      {% else %}
+      <article class="archetype-panel glass-panel archetype-cyan reveal" data-tilt>
+        <div class="archetype-badge badge-cyan">⬡ {{ profile.name }}</div>
+        <h2>{{ profile.name }}</h2>
+        <p class="archetype-desc">{{ profile.description }}</p>
+        <div class="gauge-group">
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Weekly Study Hours</span>
+              <strong>{{ profile.study_hours }}h</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-cyan" style="width: {{ (profile.study_hours / 40 * 100)|round }}%"></div>
+            </div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Attendance</span>
+              <strong>{{ profile.attendance }}%</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-cyan" style="width: {{ profile.attendance|round }}%"></div>
+            </div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">
+              <span>Class Participation</span>
+              <strong>{{ profile.participation }} / 10</strong>
+            </div>
+            <div class="gauge-track">
+              <div class="gauge-fill fill-cyan" style="width: {{ (profile.participation / 10 * 100)|round }}%"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+      {% endif %}
+      {% endfor %}
+
     </div>
-    {% endfor %}
-  </div>
-</section>
+
+    <!-- Comparison note -->
+    <div class="story-panel glass-panel reveal" style="margin-top:40px;" data-tilt>
+      <span class="story-step">Archetype Assignment</span>
+      <h3>Which archetype are you?</h3>
+      <p>
+        The analyzer computes your Euclidean distance to all three cluster centroids in scaled feature space
+        and assigns the nearest one. Two students with different raw values may share an archetype if their
+        relative behavioral pattern matches the same centroid. Run the dashboard to find yours.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="cta-banner reveal">
+    <h2>Find your behavioral archetype.</h2>
+    <p>Enter three behavior values. The clustering engine assigns your type in under a second.</p>
+    <a href="/dashboard" class="btn btn-primary" id="study-types-cta-btn">Launch Analyzer</a>
+  </section>
+
+</div>
 {% endblock %}
