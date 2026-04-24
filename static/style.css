@@ -1569,25 +1569,15 @@ canvas { width: 100% !important; max-height: 300px; }
 /* ════════════════════════════════════════════════════════════════
    PIPELINE SCROLL — animated spine connector
    ════════════════════════════════════════════════════════════════ */
-.pipeline-spine {
-  position: sticky;
-  top: 108px;
-  align-self: start;
-  height: calc(100vh - 140px);
-  max-height: 800px;
-  overflow: hidden;
-}
 .spine-dot {
   transition: box-shadow 300ms ease, transform 300ms ease;
 }
-.pipeline-step.is-active .spine-dot,
 .spine-dot.active {
   box-shadow: 0 0 28px rgba(111,231,255,0.6);
   transform: scale(1.12);
 }
 .spine-line {
-  background: linear-gradient(180deg, rgba(111,231,255,0.5), rgba(111,231,255,0.06));
-  transition: background 400ms ease;
+  transition: opacity 400ms ease;
 }
 
 /* ════════════════════════════════════════════════════════════════
