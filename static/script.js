@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeHamburger();
   initializeHeroSphere();
   initHistoryPageIfPresent();
+  initializePipelineScroll();
 });
 
 function initializeScrollProgress() {
@@ -75,6 +76,30 @@ function initHistoryPageIfPresent() {
   if (window.SBAHistory?.initHistoryPage) {
     window.SBAHistory.initHistoryPage();
   }
+}
+
+/* ── Pipeline scroll — activate spine dots on How It Works page ── */
+function initializePipelineScroll() {
+  const steps = document.querySelectorAll(".pipeline-step");
+  const dots  = document.querySelectorAll(".spine-dot");
+  if (!steps.length || !dots.length) return;
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      /* Find which step index fired */
+      const idx = [...steps].indexOf(entry.target);
+      dots.forEach((dot, i) => dot.classList.toggle("active", i === idx));
+
+      /* Grow the spine-line coming before this dot */
+      const lines = document.querySelectorAll(".spine-line");
+      lines.forEach((line, i) => {
+        line.style.opacity = i < idx ? "1" : "0.25";
+      });
+    });
+  }, { threshold: 0.45 });
+
+  steps.forEach((step) => obs.observe(step));
 }
 
 function initializeRangeValues() {

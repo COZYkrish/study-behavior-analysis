@@ -1496,3 +1496,122 @@ canvas { width: 100% !important; max-height: 300px; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   SCORE RADIAL RING — dashboard plan item
+   ════════════════════════════════════════════════════════════════ */
+.score-panel.has-ring::before {
+  content: none; /* disable glass highlight */
+}
+.score-panel.has-ring {
+  background:
+    conic-gradient(
+      from 210deg,
+      var(--ring-color, #6fe7ff) calc(var(--ring-pct, 0) * 1.2deg),
+      rgba(111,231,255,0.06) calc(var(--ring-pct, 0) * 1.2deg)
+    ),
+    linear-gradient(180deg, rgba(16,32,52,0.92), rgba(7,17,30,0.82));
+  transition: --ring-pct 900ms ease;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   FINGERPRINT COLOR FILL BARS
+   ════════════════════════════════════════════════════════════════ */
+.fp-bar-track {
+  height: 4px;
+  background: rgba(111,231,255,0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.fp-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  width: 0%;
+  transition: width 800ms cubic-bezier(0.16,1,0.3,1);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ALIGNMENT GAUGE
+   ════════════════════════════════════════════════════════════════ */
+.alignment-gauge {
+  position: relative;
+  width: 100%;
+  max-width: 140px;
+  margin: 16px auto 8px;
+}
+.alignment-gauge svg { width: 100%; display: block; }
+.gauge-center-label {
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  font-family: "Syncopate", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--cyan);
+  line-height: 1;
+}
+#gauge-arc {
+  stroke-dasharray: 173;
+  stroke-dashoffset: 173;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   INSIGHT TILE ICON PREFIX
+   ════════════════════════════════════════════════════════════════ */
+.insight-tile-icon {
+  font-size: 1.4rem;
+  color: var(--cyan);
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   PIPELINE SCROLL — animated spine connector
+   ════════════════════════════════════════════════════════════════ */
+.pipeline-spine {
+  position: sticky;
+  top: 108px;
+  align-self: start;
+  height: calc(100vh - 140px);
+  max-height: 800px;
+  overflow: hidden;
+}
+.spine-dot {
+  transition: box-shadow 300ms ease, transform 300ms ease;
+}
+.pipeline-step.is-active .spine-dot,
+.spine-dot.active {
+  box-shadow: 0 0 28px rgba(111,231,255,0.6);
+  transform: scale(1.12);
+}
+.spine-line {
+  background: linear-gradient(180deg, rgba(111,231,255,0.5), rgba(111,231,255,0.06));
+  transition: background 400ms ease;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   PER-PAGE BODY CLASS AMBIENT ACCENT OVERRIDES
+   ════════════════════════════════════════════════════════════════ */
+.landing-page .ambient-a { background: rgba(111,231,255,0.24); }
+.landing-page .ambient-c { background: rgba(97,242,199,0.16); }
+
+.dashboard-page .ambient-a { background: rgba(76,165,255,0.20); }
+.dashboard-page .ambient-b { background: rgba(111,231,255,0.14); }
+
+.studytypes-page .ambient-a { background: rgba(97,242,199,0.22); }
+.studytypes-page .ambient-b { background: rgba(111,231,255,0.14); }
+.studytypes-page .ambient-c { background: rgba(255,211,111,0.12); }
+
+.insights-page .ambient-a { background: rgba(111,231,255,0.18); }
+.insights-page .ambient-c { background: rgba(180,125,255,0.14); }
+
+.howitworks-page .ambient-a { background: rgba(76,165,255,0.22); }
+.howitworks-page .ambient-c { background: rgba(111,231,255,0.12); }
+
+.history-page .ambient-a { background: rgba(97,242,199,0.16); }
+.history-page .ambient-b { background: rgba(76,165,255,0.16); }
+
+.about-page .ambient-b { background: rgba(180,125,255,0.16); }
+.about-page .ambient-c { background: rgba(97,242,199,0.12); }
+
