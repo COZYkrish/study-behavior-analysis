@@ -58,12 +58,10 @@ def _get_models():
     return _MODELS
 
 
-@app.route("/")
 def index():
     return render_template("index.html", meta=META, overview=_build_overview_stats())
 
 
-@app.route("/dashboard")
 def dashboard():
     return render_template(
         "dashboard.html",
@@ -71,6 +69,33 @@ def dashboard():
         overview=_build_overview_stats(),
         cluster_profiles=_cluster_profiles(),
     )
+
+
+# --- New Multipage Routes ---
+@app.route("/about")
+def about():
+    return render_template("about.html", meta=META)
+
+
+@app.route("/how-it-works")
+def how_it_works():
+    return render_template("how_it_works.html", meta=META)
+
+
+@app.route("/study-types")
+def study_types():
+    return render_template("study_types.html", meta=META, cluster_profiles=_cluster_profiles())
+
+
+@app.route("/insights")
+def insights():
+    return render_template("insights.html", meta=META)
+
+
+@app.route("/history")
+def history():
+    # Placeholder: In-memory or local storage can be added later
+    return render_template("history.html", meta=META)
 
 
 @app.route("/predict", methods=["POST"])
