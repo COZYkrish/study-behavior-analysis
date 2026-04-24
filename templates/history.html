@@ -1,11 +1,78 @@
 {% extends "base.html" %}
-{% block title %}History - Study Behavior Analyzer{% endblock %}
+{% block title %}Prediction History — Study Behavior Analyzer{% endblock %}
 {% block body_class %}history-page{% endblock %}
+
 {% block content %}
-<section class="history-hero section-shell">
-  <h1>Saved Runs</h1>
-  <div class="history-placeholder glass-panel">
-    <p>History and saved runs will appear here.<br>Persistence coming soon.</p>
+<div class="section-shell">
+
+  <!-- ═══ Hero ═══ -->
+  <header class="history-hero">
+    <span class="eyebrow reveal">Local Session Log</span>
+    <h1 class="reveal">Prediction History</h1>
+    <p class="lead reveal" style="max-width:52ch; margin-top:12px;">
+      Every prediction run on this device is saved locally. Your runs persist across
+      browser sessions and can be exported as JSON at any time.
+    </p>
+  </header>
+
+  <!-- ═══ Controls ═══ -->
+  <div class="history-controls reveal">
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <span class="eyebrow">Saved Runs</span>
+      <span class="history-count-badge">
+        <span id="history-count">0</span> runs
+      </span>
+    </div>
+    <div class="history-actions">
+      <button class="btn btn-ghost btn-sm" id="export-history-btn">
+        ↓ Export JSON
+      </button>
+      <button class="btn btn-secondary btn-sm" id="clear-history-btn">
+        ✕ Clear All
+      </button>
+    </div>
   </div>
-</section>
+
+  <!-- Column headers -->
+  <div class="history-row-header reveal" aria-hidden="true"
+       style="display:grid; grid-template-columns:80px 120px 1fr 120px 140px; gap:20px; padding:0 24px 10px; color:var(--muted); font-size:0.76rem; letter-spacing:0.1em; text-transform:uppercase;">
+    <span>Date</span>
+    <span>Score</span>
+    <span>Type</span>
+    <span>Inputs</span>
+    <span style="text-align:right;">Confidence</span>
+  </div>
+
+  <!-- Run list (populated by history.js) -->
+  <div id="history-list" class="history-list" aria-label="Prediction history" role="list"></div>
+
+  <!-- Empty state -->
+  <div id="history-empty" class="history-empty glass-panel reveal hidden" role="status">
+    <span class="history-empty-icon">⬡</span>
+    <h3>No runs yet</h3>
+    <p>Predictions you run on the dashboard will appear here automatically.</p>
+    <a href="/dashboard" class="btn btn-primary" style="margin-top:24px;" id="history-empty-cta">
+      Run Your First Prediction
+    </a>
+  </div>
+
+  <!-- ═══ Info callout ═══ -->
+  <div class="story-panel glass-panel reveal" style="margin-top:40px;" data-tilt>
+    <span class="story-step">Storage</span>
+    <h3>Where is this data stored?</h3>
+    <p>
+      All history is stored in your browser's <strong>localStorage</strong> — no data is sent to any server from this page.
+      Up to 20 runs are kept. When the limit is reached, the oldest run is removed to make room for the newest.
+      Use the export button to save a permanent copy as JSON.
+    </p>
+  </div>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="cta-banner reveal">
+    <h2>Ready to run another prediction?</h2>
+    <p>The dashboard takes under a second to return your full performance analysis.</p>
+    <a href="/dashboard" class="btn btn-primary" id="history-cta-btn">Open Dashboard</a>
+  </section>
+
+</div>
 {% endblock %}

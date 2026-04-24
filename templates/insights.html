@@ -1,28 +1,161 @@
 {% extends "base.html" %}
-{% block title %}Insights - Study Behavior Analyzer{% endblock %}
+{% block title %}Insights & Optimal Zones — Study Behavior Analyzer{% endblock %}
 {% block body_class %}insights-page{% endblock %}
+
 {% block content %}
-<section class="insights-hero section-shell">
-  <h1>Optimal Zones &amp; Recommendations</h1>
-  <div class="insight-cards">
-    <div class="insight-card glass-panel">
-      <h2>Optimal Study Zone</h2>
-      <p>Weekly Study Hours: <strong>16-24</strong></p>
-      <p>Attendance: <strong>85-95%</strong></p>
-      <p>Participation: <strong>6-8.5 / 10</strong></p>
+<div class="section-shell">
+
+  <!-- ═══ Hero ═══ -->
+  <header class="insights-hero">
+    <span class="eyebrow reveal">Performance Intelligence</span>
+    <h1 class="reveal">Optimal zones, benchmark<br>logic, and score tiers.</h1>
+    <p class="lead reveal" style="max-width:56ch; margin-top:14px;">
+      The system doesn't just predict — it measures distance from an empirically-derived target band
+      and translates that distance into specific, actionable guidance.
+    </p>
+  </header>
+
+  <!-- ═══ Optimal Zone ═══ -->
+  <section class="optimal-zone-section">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Optimal Study Zone</span>
+      <h2>The high-efficiency operating band.</h2>
+      <p class="muted-copy" style="margin-top:12px; max-width:56ch;">
+        Derived from patterns where students consistently achieved the highest predicted scores.
+        Being inside all three bands simultaneously correlates with the strongest performance outcomes.
+      </p>
     </div>
-    <div class="insight-card glass-panel">
-      <h2>Benchmark Logic</h2>
-      <p>Alignment with optimal bands increases predicted score and productivity reliability.</p>
+
+    <div class="optimal-zone-grid">
+      <div class="zone-card glass-panel reveal" data-tilt>
+        <span class="zone-label">Weekly Study Hours</span>
+        <div class="zone-range">16 – 24 h</div>
+        <div class="zone-bar-track">
+          <div class="zone-bar-fill" style="width:40%; margin-left:40%;"></div>
+        </div>
+        <p>Below 16h: insufficient output structure. Above 24h: diminishing returns become visible in the trend curve. The 16–24h band consistently delivers the strongest regression lift.</p>
+      </div>
+      <div class="zone-card glass-panel reveal" data-tilt>
+        <span class="zone-label">Attendance Percentage</span>
+        <div class="zone-range">85 – 95%</div>
+        <div class="zone-bar-track">
+          <div class="zone-bar-fill" style="width:10%; margin-left:85%;"></div>
+        </div>
+        <p>Attendance is the strongest single predictor of model confidence. Profiles below 85% consistently occupy the recovery productivity band and carry low benchmark alignment.</p>
+      </div>
+      <div class="zone-card glass-panel reveal" data-tilt>
+        <span class="zone-label">Class Participation</span>
+        <div class="zone-range">6.0 – 8.5 / 10</div>
+        <div class="zone-bar-track">
+          <div class="zone-bar-fill" style="width:25%; margin-left:60%;"></div>
+        </div>
+        <p>Participation captures visible classroom engagement — a behavioral signal that correlates with active learning and knowledge retention beyond solo study hours.</p>
+      </div>
     </div>
-    <div class="insight-card glass-panel">
-      <h2>Actionable Guidance</h2>
-      <ul>
-        <li>Increase study hours if below 16/week</li>
-        <li>Push attendance above 85%</li>
-        <li>Boost participation above 6/10</li>
-      </ul>
+  </section>
+
+  <!-- ═══ Benchmark Logic ═══ -->
+  <section class="benchmark-section">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Benchmark Logic</span>
+      <h2>How alignment shapes the output.</h2>
     </div>
-  </div>
-</section>
+    <div class="about-cols" style="margin-top:30px;">
+      <div class="about-card-panel glass-panel reveal">
+        <h3>Alignment Score Calculation</h3>
+        <p>Each of the three inputs is checked against its target band. Alignment % = the fraction of inputs inside their optimal band × 100.</p>
+        <div class="confidence-formula">
+          alignment = (inputs_in_band / 3) × 100
+        </div>
+        <div class="model-metrics" style="margin-top:16px;">
+          <div class="model-metric-row"><span>All 3 in band</span><strong class="text-emerald">100% aligned</strong></div>
+          <div class="model-metric-row"><span>2 of 3 in band</span><strong class="text-cyan">67% aligned</strong></div>
+          <div class="model-metric-row"><span>1 of 3 in band</span><strong class="text-amber">33% aligned</strong></div>
+          <div class="model-metric-row"><span>None in band</span><strong class="text-danger">0% aligned</strong></div>
+        </div>
+      </div>
+      <div class="about-card-panel glass-panel reveal">
+        <h3>How Alignment Affects Confidence</h3>
+        <p>Alignment feeds directly into the reliability band formula alongside classifier confidence probability.</p>
+        <div class="confidence-formula">
+          reliability = (classifier_prob × 0.6) + (alignment × 0.4)
+        </div>
+        <p style="margin-top:14px;" class="muted-copy">
+          A student with high study hours but low attendance may still achieve a good score prediction —
+          but with lower reliability because the behavior pattern sits further from the learned high-confidence zone.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Actionable Guidance ═══ -->
+  <section class="benchmark-section">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Actionable Guidance</span>
+      <h2>Three levers. Measurable impact.</h2>
+    </div>
+    <div class="guidance-grid">
+      <div class="guidance-card glass-panel reveal" data-tilt>
+        <div class="guidance-num">01</div>
+        <h3>Nudge Study Hours</h3>
+        <p>If weekly hours are below 16, each additional focused hour produces measurable score lift on the trend curve — up to the 20–24h plateau. The trend endpoint shows exactly where the curve starts tapering.</p>
+        <span class="guidance-action">Target: 16–24 h/wk</span>
+      </div>
+      <div class="guidance-card glass-panel reveal" data-tilt>
+        <div class="guidance-num">02</div>
+        <h3>Boost Attendance</h3>
+        <p>Attendance is the fastest lever to improve confidence reliability. Even moving from 78% to 86% can shift the benchmark alignment from 33% to 67%, materially changing the reliability band outcome.</p>
+        <span class="guidance-action">Target: ≥ 85%</span>
+      </div>
+      <div class="guidance-card glass-panel reveal" data-tilt>
+        <div class="guidance-num">03</div>
+        <h3>Raise Participation</h3>
+        <p>Participation below 6/10 marks a boundary where the classifier begins to route profiles toward lower productivity bands. Crossing 6.0 stabilizes the classification outcome for most attendance levels.</p>
+        <span class="guidance-action">Target: 6.0 – 8.5 / 10</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Score Tiers ═══ -->
+  <section class="score-tier-section">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Score Bands</span>
+      <h2>Three performance trajectories.</h2>
+    </div>
+    <div class="score-tier-stack">
+      <div class="score-tier score-tier-elite reveal">
+        <span class="score-tier-val">85 +</span>
+        <div class="score-tier-body">
+          <strong>Elite Trajectory</strong>
+          <p>Operating at or near all three optimal input bands. Model indicates consistently strong learning and output efficiency. Score lift to this tier typically requires 85%+ attendance, 20+ study hours, and participation above 7.</p>
+        </div>
+      </div>
+      <div class="score-tier score-tier-competitive reveal">
+        <span class="score-tier-val">70 – 84</span>
+        <div class="score-tier-body">
+          <strong>Competitive Trajectory</strong>
+          <p>Strong baseline with room for compounding gains. Usually 1–2 inputs near the optimal band. Small adjustments in the weakest dimension (attendance or study hours) typically produce the largest score lift.</p>
+        </div>
+      </div>
+      <div class="score-tier score-tier-recovery reveal">
+        <span class="score-tier-val">&lt; 70</span>
+        <div class="score-tier-body">
+          <strong>Recovery Trajectory</strong>
+          <p>Profile sits outside the strongest scoring band. Multiple inputs below their optimal zone. The console's suggestions target the highest-leverage intervention — the lever that produces the most immediate alignment gain.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="cta-banner reveal">
+    <h2>See where you stand.</h2>
+    <p>The dashboard runs benchmark alignment, generates your score tier, and shows the exact delta to the optimal band — in real time.</p>
+    <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+      <a href="/dashboard" class="btn btn-primary" id="insights-cta-btn">Open Dashboard</a>
+      <a href="/study-types" class="btn btn-secondary" id="insights-types-btn">Study Archetypes</a>
+    </div>
+  </section>
+
+</div>
 {% endblock %}
