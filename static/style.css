@@ -1545,17 +1545,23 @@ canvas { width: 100% !important; max-height: 300px; }
 /* ════════════════════════════════════════════════════════════════
    SCORE RADIAL RING — dashboard plan item
    ════════════════════════════════════════════════════════════════ */
+@property --ring-pct {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
 .score-panel.has-ring::before {
   content: none; /* disable glass highlight */
 }
 .score-panel.has-ring {
   background:
     conic-gradient(
-      from 210deg,
-      var(--ring-color, #6fe7ff) calc(var(--ring-pct, 0) * 1.2deg),
-      rgba(111,231,255,0.06) calc(var(--ring-pct, 0) * 1.2deg)
+      from 210deg at 20% 30%,
+      color-mix(in srgb, var(--ring-color, #6fe7ff) 15%, transparent) calc(var(--ring-pct, 0) * 1.2deg),
+      rgba(111,231,255,0.03) calc(var(--ring-pct, 0) * 1.2deg)
     ),
-    linear-gradient(180deg, rgba(16,32,52,0.92), rgba(7,17,30,0.82));
+    linear-gradient(180deg, rgba(16,32,52,0.88), rgba(7,17,30,0.78));
   transition: --ring-pct 900ms ease;
 }
 

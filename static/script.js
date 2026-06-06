@@ -17,6 +17,7 @@ const CLUSTER_META = {
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 document.addEventListener("DOMContentLoaded", () => {
+  initializeBackgroundVideo();
   initializeRangeValues();
   initializeRevealObserver();
   initializeCounters();
@@ -29,6 +30,13 @@ document.addEventListener("DOMContentLoaded", () => {
   initHistoryPageIfPresent();
   initializePipelineScroll();
 });
+
+function initializeBackgroundVideo() {
+  const bgVideo = document.getElementById("bg-video");
+  if (bgVideo) {
+    bgVideo.play().catch(e => console.log("Video autoplay prevented:", e));
+  }
+}
 
 function initializeScrollProgress() {
   const bar = document.getElementById("scroll-progress");
