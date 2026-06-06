@@ -976,18 +976,22 @@ canvas { width: 100% !important; max-height: 300px; }
    ════════════════════════════════════════════════════════════════ */
 
 .page-hero {
-  padding: 80px 0 60px;
-  display: grid;
-  gap: 16px;
+  padding: 100px 0 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
   max-width: 860px;
+  gap: 16px;
 }
 .page-hero h1 {
   font-family: var(--font-display);
   font-size: clamp(2rem, 4.5vw, 4.2rem);
   line-height: 1.08;
-  margin: 18px 0;
+  margin: 18px 0 0;
 }
-.page-hero .lead { color: var(--text-dim); font-size: 1.1rem; line-height: 1.75; max-width: 56ch; }
+.page-hero .lead { color: var(--text-dim); font-size: 1.1rem; line-height: 1.75; max-width: 56ch; margin: 0 auto; }
 
 .about-section { padding: 60px 0; }
 .about-section + .about-section { border-top: 1px solid rgba(111,231,255,0.07); }
@@ -1127,7 +1131,7 @@ canvas { width: 100% !important; max-height: 300px; }
 
 .study-types-section { padding: 80px 0; }
 
-.archetype-hero { padding: 80px 0 50px; }
+.archetype-hero { padding: 100px 0 50px; display: flex; flex-direction: column; align-items: center; text-align: center; }
 .archetype-hero h1 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.1; margin: 18px 0; }
 
 .archetype-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 50px; }
@@ -1218,7 +1222,7 @@ canvas { width: 100% !important; max-height: 300px; }
    INSIGHTS PAGE
    ════════════════════════════════════════════════════════════════ */
 
-.insights-hero { padding: 80px 0 50px; }
+.insights-hero { padding: 100px 0 50px; display: flex; flex-direction: column; align-items: center; text-align: center; }
 .insights-hero h1 { font-family: var(--font-display); font-size: clamp(1.9rem, 4vw, 3.4rem); line-height: 1.1; margin: 18px 0; }
 
 .optimal-zone-section { padding: 50px 0; }
@@ -1312,7 +1316,7 @@ canvas { width: 100% !important; max-height: 300px; }
    HISTORY PAGE
    ════════════════════════════════════════════════════════════════ */
 
-.history-hero { padding: 80px 0 50px; }
+.history-hero { padding: 100px 0 50px; display: flex; flex-direction: column; align-items: center; text-align: center; }
 .history-hero h1 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.6rem); margin: 18px 0; line-height: 1.1; }
 
 .history-controls {
