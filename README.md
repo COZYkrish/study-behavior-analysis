@@ -9,11 +9,11 @@ An immersive, ML-powered web application that acts as a **Futuristic Academic In
 The application utilizes a rich Glassmorphism UI combined with smooth WebGL 3D scenes. The entire experience feels like a cinematic data exploration engine.
 
 ### Hero Interface
-![Hero Interface](static/images/hero.png)
+![Hero Interface](static/images/hero-banner-v2.png)
 *The landing page features dynamic 3D elements and a stunning scroll-progress narrative that explains the intelligence pipeline.*
 
 ### Intelligence Dashboard
-![Dashboard Analysis](static/images/dashboard.png)
+![Dashboard Analysis](static/images/dashboard-ui-v2.png)
 *The main dashboard provides real-time model inference as you slide the behavior dials. It outputs radial progress SVG rings, insight cards, and performance deltas.*
 
 ---
